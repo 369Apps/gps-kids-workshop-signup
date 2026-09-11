@@ -12,7 +12,7 @@
     background: #FFF9F0; color: #4A2C1A; line-height: 1.5;
     -webkit-font-smoothing: antialiased;
   }
-  .wrap { max-width: 560px; margin: 0 auto; padding: 24px 20px 48px; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 48px; }
   .badge {
     display: inline-block; background: #FFD66B; color: #4A2C1A;
     font-weight: 700; font-size: 13px; padding: 8px 16px; border-radius: 999px;
@@ -33,39 +33,36 @@
     font-size: 14px; padding: 6px 14px; border-radius: 10px; transform: rotate(-2deg);
     border: 2px solid #4A2C1A; margin-bottom: 16px;
   }
-  form {
+  .card {
     background: #fff; border: 2px solid #4A2C1A; border-radius: 20px;
-    padding: 26px 22px; box-shadow: 5px 5px 0 #4A2C1A;
+    padding: 26px 22px; box-shadow: 5px 5px 0 #4A2C1A; margin-bottom: 20px;
   }
-  form h2 { font-size: 24px; margin-bottom: 6px; }
-  form p.hint { font-size: 14px; color: #7A5B45; margin-bottom: 20px; }
-  label { display: block; font-weight: 700; font-size: 14px; margin: 16px 0 6px; }
-  input[type=text], input[type=tel], input[type=number] {
-    width: 100%; padding: 13px 14px; font-size: 16px; border: 2px solid #E5D5BC;
-    border-radius: 12px; background: #FFFDF8; color: #4A2C1A;
-  }
-  input:focus { outline: none; border-color: #D6336C; }
-  .radio-row { display: flex; gap: 12px; margin-top: 6px; }
+  .card h2 { font-size: 22px; margin-bottom: 14px; }
+  .radio-row { display: flex; gap: 12px; }
   .radio-card {
-    flex: 1; border: 2px solid #E5D5BC; border-radius: 12px; padding: 12px;
-    text-align: center; cursor: pointer; font-weight: 700; font-size: 15px;
+    flex: 1; border: 2px solid #E5D5BC; border-radius: 12px; padding: 14px;
+    text-align: center; cursor: pointer; font-weight: 700; font-size: 16px;
     background: #FFFDF8; transition: border-color .15s, background .15s;
   }
-  .radio-card input { display: none; }
   .radio-card small { display: block; font-weight: 400; color: #7A5B45; font-size: 12px; margin-top: 2px; }
-  .radio-card.selected { border-color: #D6336C; background: #FFF0F5; }
-  button.submit {
-    width: 100%; margin-top: 24px; padding: 16px; font-size: 18px; font-weight: 800;
-    color: #fff; background: #D6336C; border: none; border-radius: 14px; cursor: pointer;
+  .step { display: none; }
+  .step h2 { font-size: 22px; margin-bottom: 6px; }
+  .step p.hint { font-size: 14px; color: #7A5B45; margin-bottom: 12px; }
+  .free-note {
+    background: #E6F7ED; border: 2px solid #2E7D5B; border-radius: 12px;
+    padding: 14px 16px; font-size: 15px; margin-bottom: 16px;
   }
-  button.submit:active { transform: scale(.98); }
-  .result { display: none; background: #fff; border: 2px solid #4A2C1A; border-radius: 20px;
-    padding: 30px 24px; text-align: center; box-shadow: 5px 5px 0 #4A2C1A; }
-  .result h2 { font-size: 26px; margin-bottom: 10px; }
-  .result p { color: #7A5B45; margin-bottom: 18px; font-size: 16px; }
+  .pay-box {
+    background: #F0EFFF; border: 2px dashed #635BFF; border-radius: 12px;
+    padding: 18px; margin-top: 18px; text-align: center;
+  }
+  .pay-box p { font-size: 15px; margin-bottom: 12px; }
   .pay-btn {
     display: inline-block; background: #635BFF; color: #fff; font-weight: 800; font-size: 18px;
     padding: 16px 34px; border-radius: 14px; text-decoration: none;
+  }
+  iframe.form-embed {
+    width: 100%; height: 1100px; border: none; border-radius: 12px; background: #fff;
   }
   .footer { text-align: center; margin-top: 28px; font-size: 13px; color: #A68B6E; }
   .footer a { color: #2E7D5B; }
@@ -86,68 +83,42 @@
 
   <span class="spots">10 spots only</span>
 
-  <form id="signupForm" action="https://docs.google.com/forms/d/e/1FAIpQLSeC4qrJHAtzPGUiUw80MDa_D_46KIFvOQy_CZYjhplQwrTwWQ/formResponse" method="POST" target="hiddenFrame">
-    <h2>Claim your child&rsquo;s spot</h2>
-    <p class="hint">One quick form for both GPS Kids members and new families.</p>
-
-    <label for="parent">Parent&rsquo;s full name</label>
-    <input type="text" id="parent" name="entry.1536958094" required autocomplete="name">
-
-    <label for="phone">Phone number</label>
-    <input type="tel" id="phone" name="entry.1301159014" required autocomplete="tel">
-
-    <label for="kid">Kid&rsquo;s name</label>
-    <input type="text" id="kid" name="entry.1490838091" required>
-
-    <label for="age">Kid&rsquo;s age</label>
-    <input type="number" id="age" name="entry.954316643" min="6" max="12" required>
-
-    <label>Is your child a GPS Kids member?</label>
+  <div class="card" id="memberCard">
+    <h2>Is your child a GPS Kids member?</h2>
     <div class="radio-row">
-      <label class="radio-card" id="cardYes"><input type="radio" name="entry.538425871" value="Yes" required>Yes<small>Already in &mdash; free</small></label>
-      <label class="radio-card" id="cardNo"><input type="radio" name="entry.538425871" value="No">No<small>$20 per child</small></label>
+      <div class="radio-card" onclick="pick(true)">Yes<small>Already in &mdash; free</small></div>
+      <div class="radio-card" onclick="pick(false)">No<small>$20 per child</small></div>
     </div>
-
-    <button class="submit" type="submit">Reserve my spot</button>
-  </form>
-  <iframe name="hiddenFrame" style="display:none"></iframe>
-
-  <div class="result" id="resultMember">
-    <h2>You&rsquo;re in! 🎉</h2>
-    <p>As a GPS Kids member, your child&rsquo;s spot is confirmed &mdash; no payment needed. We&rsquo;ll see you on <strong>Sunday, October 4 at 11:00 AM</strong> at Where&rsquo;s The Scoop?</p>
-    <p style="font-size:14px">Questions? Text <a href="tel:+14707792869">470-779-2869</a>.</p>
   </div>
 
-  <div class="result" id="resultPaid">
-    <h2>Almost done! 🍦</h2>
-    <p>Your details are saved. Tap below to pay <strong>$20</strong> and lock in your child&rsquo;s spot.</p>
-    <a class="pay-btn" href="https://buy.stripe.com/dRmbJ21vqfpP0i94IraMU0x">Pay $20 &amp; Reserve</a>
-    <p style="font-size:14px; margin-top:16px">Questions? Text <a href="tel:+14707792869">470-779-2869</a>.</p>
+  <div class="card step" id="stepMember">
+    <div class="free-note">🎉 <strong>Members attend free!</strong> Just fill in the form below to save your child&rsquo;s spot.</div>
+    <h2>Step 1 &mdash; Your details</h2>
+    <iframe class="form-embed" src="https://docs.google.com/forms/d/e/1FAIpQLSeC4qrJHAtzPGUiUw80MDa_D_46KIFvOQy_CZYjhplQwrTwWQ/viewform?embedded=true" title="Workshop signup form" loading="lazy">Loading&hellip;</iframe>
+  </div>
+
+  <div class="card step" id="stepGuest">
+    <h2>Step 1 &mdash; Your details</h2>
+    <p class="hint">Fill in the form below, then complete Step 2 to lock in the spot.</p>
+    <iframe class="form-embed" src="https://docs.google.com/forms/d/e/1FAIpQLSeC4qrJHAtzPGUiUw80MDa_D_46KIFvOQy_CZYjhplQwrTwWQ/viewform?embedded=true" title="Workshop signup form" loading="lazy">Loading&hellip;</iframe>
+    <div class="pay-box">
+      <p><strong>Step 2 &mdash;</strong> Pay <strong>$20</strong> to reserve your child&rsquo;s spot.</p>
+      <a class="pay-btn" href="https://buy.stripe.com/dRmbJ21vqfpP0i94IraMU0x">Pay $20 &amp; Reserve</a>
+    </div>
   </div>
 
   <div class="footer">
     GPS Kids &middot; Alpharetta, GA<br>
-    <a href="https://joingpskids.com">joingpskids.com</a>
+    Questions? Text <a href="tel:+14707792869">470-779-2869</a> &middot; <a href="https://joingpskids.com">joingpskids.com</a>
   </div>
 </div>
 
 <script>
-  var cards = document.querySelectorAll('.radio-card');
-  cards.forEach(function(card){
-    card.addEventListener('click', function(){
-      cards.forEach(function(c){ c.classList.remove('selected'); });
-      card.classList.add('selected');
-    });
-  });
-  document.getElementById('signupForm').addEventListener('submit', function(){
-    var isMember = document.querySelector('input[name="entry.538425871"]:checked').value === 'Yes';
-    var form = document.getElementById('signupForm');
-    setTimeout(function(){
-      form.style.display = 'none';
-      document.getElementById(isMember ? 'resultMember' : 'resultPaid').style.display = 'block';
-      window.scrollTo(0, 0);
-    }, 600);
-  });
+  function pick(isMember) {
+    document.getElementById('memberCard').style.display = 'none';
+    document.getElementById(isMember ? 'stepMember' : 'stepGuest').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
 </script>
 </body>
 </html>
