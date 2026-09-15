@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sundae Inventors Workshop — Sign Up | GPS Kids</title>
+<meta name="description" content="Sign up for the GPS Kids Sundae Inventors Workshop on Saturday, September 26, 2026 at Dumont Creamery & Cafe, Sandy Springs, GA. Ages 6–12.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #FFF9F0; color: #4A2C1A; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 48px; }
+  .badge {
+    display: inline-block; background: #FFD66B; color: #4A2C1A;
+    font-weight: 700; font-size: 13px; padding: 8px 16px; border-radius: 999px;
+    border: 2px solid #4A2C1A; margin-bottom: 20px;
+  }
+  h1 { font-size: 34px; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 12px; }
+  h1 .pink { color: #C2185B; }
+  .sub { font-size: 17px; color: #7A5B45; margin-bottom: 24px; }
+  .details {
+    background: #fff; border: 2px solid #F0E2CC; border-radius: 16px;
+    padding: 18px 20px; margin-bottom: 24px;
+  }
+  .details div { display: flex; gap: 12px; padding: 7px 0; font-size: 15px; }
+  .details div + div { border-top: 1px solid #F5EBD9; }
+  .details strong { min-width: 58px; color: #2E7D5B; }
+  .spots {
+    display: inline-block; background: #FF8FAB; color: #4A2C1A; font-weight: 800;
+    font-size: 14px; padding: 6px 14px; border-radius: 10px; transform: rotate(-2deg);
+    border: 2px solid #4A2C1A; margin-bottom: 16px;
+  }
+  .card {
+    background: #fff; border: 2px solid #4A2C1A; border-radius: 20px;
+    padding: 26px 22px; box-shadow: 5px 5px 0 #4A2C1A; margin-bottom: 20px;
+  }
+  .card h2 { font-size: 22px; margin-bottom: 14px; }
+  .radio-row { display: flex; gap: 12px; }
+  .radio-card {
+    flex: 1; border: 2px solid #E5D5BC; border-radius: 12px; padding: 14px;
+    text-align: center; cursor: pointer; font-weight: 700; font-size: 16px;
+    background: #FFFDF8; transition: border-color .15s, background .15s;
+  }
+  .radio-card small { display: block; font-weight: 400; color: #7A5B45; font-size: 12px; margin-top: 2px; }
+  .step { display: none; }
+  .step h2 { font-size: 22px; margin-bottom: 6px; }
+  .step p.hint { font-size: 14px; color: #7A5B45; margin-bottom: 12px; }
+  .free-note {
+    background: #E6F7ED; border: 2px solid #2E7D5B; border-radius: 12px;
+    padding: 14px 16px; font-size: 15px; margin-bottom: 16px;
+  }
+  .pay-box {
+    background: #F0EFFF; border: 2px dashed #635BFF; border-radius: 12px;
+    padding: 18px; margin-top: 18px; text-align: center;
+  }
+  .pay-box p { font-size: 15px; margin-bottom: 12px; }
+  .pay-btn {
+    display: inline-block; background: #635BFF; color: #fff; font-weight: 800; font-size: 18px;
+    padding: 16px 34px; border-radius: 14px; text-decoration: none;
+  }
+  iframe.form-embed {
+    width: 100%; height: 1100px; border: none; border-radius: 12px; background: #fff;
+  }
+  .footer { text-align: center; margin-top: 28px; font-size: 13px; color: #A68B6E; }
+  .footer a { color: #2E7D5B; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">GPS Kids · Hosted by Hema Snigdha Putheti</span>
+  <h1>Sundae <span class="pink">Inventors</span> Workshop</h1>
+  <p class="sub">Invent your own sundae. Name it. Pitch it like you own the shop.</p>
+
+  <div class="details">
+    <div><strong>When</strong><span>Saturday, September 26, 2026<br>11:00 AM – 12:00 PM</span></div>
+    <div><strong>Where</strong><span>Dumont Creamery & Cafe<br>5920 Roswell Rd NE, Suite B107, Sandy Springs, GA</span></div>
+    <div><strong>Who</strong><span>Ages 6–12</span></div>
+    <div><strong>Cost</strong><span>$20 per child · GPS Kids members attend free</span></div>
+  </div>
+
+  <span class="spots">8 spots only</span>
+
+  <div class="card" id="memberCard" style="">
+    <h2>Is your child a GPS Kids member?</h2>
+    <div class="radio-row">
+      <div class="radio-card" onclick="pick(true)">Yes<small>Already in &mdash; free</small></div>
+      <div class="radio-card" onclick="pick(false)">No<small>$20 per child</small></div>
+    </div>
+  </div>
+
+  <div class="card step" id="stepMember" style="">
+    <div class="free-note">🎉 <strong>Members attend free!</strong> Just fill in the form below to save your child&rsquo;s spot.</div>
+    <h2>Step 1 &mdash; Your details</h2>
+    <div class="coming-soon" style="border:2px dashed #C2185B;border-radius:12px;padding:28px;text-align:center;font-size:18px;background:#fff;">📝 <strong>Online signups opening soon.</strong><br><span style="font-size:15px;color:#6b4a34;">Preview for review — details below.</span></div>
+  </div>
+
+  <div class="card step" id="stepGuest" style="">
+    <h2>Step 1 &mdash; Your details</h2>
+    <p class="hint">Fill in the form below, then complete Step 2 to lock in the spot.</p>
+    <div class="coming-soon" style="border:2px dashed #C2185B;border-radius:12px;padding:28px;text-align:center;font-size:18px;background:#fff;">📝 <strong>Online signups opening soon.</strong><br><span style="font-size:15px;color:#6b4a34;">Preview for review — details below.</span></div>
+    </div>
+
+  <div class="footer">
+    GPS Kids &middot; Alpharetta, GA<br>
+    Questions? Text <a href="tel:+14707792869">470-779-2869</a> &middot; <a href="https://joingpskids.com">joingpskids.com</a>
+  </div>
+</div>
+
+<script>
+  function pick(isMember) {
+    document.getElementById('memberCard').style.display = 'none';
+    document.getElementById(isMember ? 'stepMember' : 'stepGuest').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
