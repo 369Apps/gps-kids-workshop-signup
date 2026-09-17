@@ -110,6 +110,7 @@
     else done.splice(i, 1);
     saveDone(done);
     refresh();
+    maybeShowLead();
   });
 
   // ---- Library tab ----
@@ -179,5 +180,161 @@
     try { localStorage.setItem("gpsk_install_dismissed", "1"); } catch (e) {}
   });
 
+  // ---- Referral codes, sharing, lead capture (v2) ----
+  var REF_KEY = "gpsk_refcode_v1";
+  var REFBY_KEY = "gpsk_referred_by_v1";
+  var LEAD_KEY = "gpsk_lead_v1";
+  var APP_URL = "https://register.joingpskids.com/app/";
+  var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfasXtI7ylt7MWxhmz8UU9yj84jyyhxqngrOkWL0Rftjrcl2A/formResponse";
+  var ENTRY = {
+    name: "entry.1755577904",
+    email: "entry.222235729",
+    refby: "entry.2128729704",
+    refcode: "entry.1405261165"
+  };
+
+  function getRefCode() {
+    var c = null;
+    try { c = localStorage.getItem(REF_KEY); } catch (e) {}
+    if (!/^GK-[A-Z0-9]{6}$/.test(c || "")) {
+      var chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+      c = "GK-";
+      var rnd = [];
+      var i;
+      if (window.crypto && crypto.getRandomValues) {
+        var buf = new Uint32Array(6);
+        crypto.getRandomValues(buf);
+        for (i = 0; i < 6; i++) rnd.push(buf[i]);
+      } else {
+        for (i = 0; i < 6; i++) rnd.push(Math.floor(Math.random() * 4294967296));
+      }
+      for (i = 0; i < 6; i++) c += chars[rnd[i] % chars.length];
+      try { localStorage.setItem(REF_KEY, c); } catch (e) {}
+    }
+    return c;
+  }
+
+  function getReferredBy() {
+    try { return localStorage.getItem(REFBY_KEY) || ""; } catch (e) { return ""; }
+  }
+
+  // Capture ?ref= on load. First touch wins; never overwrite.
+  (function () {
+    var m = /[?&]ref=([A-Za-z0-9-]+)/.exec(location.search);
+    if (m) {
+      var inbound = decodeURIComponent(m[1]).toUpperCase();
+      if (/^GK-[A-Z0-9]{6}$/.test(inbound) && inbound !== getRefCode() && !getReferredBy()) {
+        try { localStorage.setItem(REFBY_KEY, inbound); } catch (e) {}
+      }
+      try { history.replaceState(null, "", location.pathname + location.hash); } catch (e) {}
+    }
+  })();
+
+  function toast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.hidden = false;
+    t.classList.add("show");
+    setTimeout(function () { t.classList.remove("show"); t.hidden = true; }, 3000);
+  }
+
+  document.getElementById("share-btn").addEventListener("click", function () {
+    var link = APP_URL + "?ref=" + getRefCode();
+    var text = "We've been playing one 5-minute speaking game a night from this little app. My kid actually asks for it now. Thought yours might like it too:";
+    if (navigator.share) {
+      navigator.share({ title: "GPS Kids Daily", text: text, url: link }).catch(function () {});
+    } else if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text + " " + link).then(
+        function () { toast("Link copied. Paste it to a parent."); },
+        function () { toast("Copy this link: " + link); });
+    } else {
+      window.prompt("Copy this link and send it to a parent:", link);
+    }
+  });
+
+  // ---- Soft lead capture: ask once after the first "We did it" ----
+  var leadCard = document.getElementById("lead-card");
+  function leadState() {
+    try { return localStorage.getItem(LEAD_KEY) || "none"; } catch (e) { return "done"; }
+  }
+  function setLeadState(s) { try { localStorage.setItem(LEAD_KEY, s); } catch (e) {} }
+
+  function maybeShowLead() {
+    var st = leadState();
+    if (st === "done") return;
+    var done = loadDone();
+    if ((st === "none" && done.length >= 1) ||
+        (st === "later" && done.length >= 3)) {
+      leadCard.hidden = false;
+    }
+  }
+
+  document.getElementById("lead-dismiss").addEventListener("click", function () {
+    leadCard.hidden = true;
+    setLeadState(leadState() === "later" ? "done" : "later");
+  });
+
+  document.getElementById("lead-submit").addEventListener("click", function () {
+    var nameEl = document.getElementById("lead-name");
+    var emailEl = document.getElementById("lead-email");
+    var msg = document.getElementById("lead-msg");
+    var name = nameEl.value.trim();
+    var email = emailEl.value.trim().toLowerCase();
+    if (!name) {
+      msg.hidden = false;
+      msg.textContent = "Please add your name so we know what to call you.";
+      nameEl.focus();
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      msg.hidden = false;
+      msg.textContent = "Please enter a valid email address.";
+      emailEl.focus();
+      return;
+    }
+    var btn = document.getElementById("lead-submit");
+    btn.disabled = true;
+    btn.textContent = "Joining...";
+
+    // POST to Google Form through a hidden iframe (no CORS issues).
+    var iframe = document.createElement("iframe");
+    iframe.name = "gpsk_lead_iframe";
+    iframe.style.display = "none";
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = FORM_URL;
+    form.target = "gpsk_lead_iframe";
+    var fields = {};
+    fields[ENTRY.name] = name;
+    fields[ENTRY.email] = email;
+    fields[ENTRY.refby] = getReferredBy();
+    fields[ENTRY.refcode] = getRefCode();
+    Object.keys(fields).forEach(function (k) {
+      var inp = document.createElement("input");
+      inp.type = "hidden";
+      inp.name = k;
+      inp.value = fields[k];
+      form.appendChild(inp);
+    });
+    var settled = false;
+    function finish(ok) {
+      if (settled) return;
+      settled = true;
+      setLeadState("done");
+      leadCard.innerHTML = '<div class="lead-title">You are in.</div>' +
+        '<p class="lead-sub">' +
+        (ok ? "Tomorrow's game lands in your inbox at 7 AM."
+            : "Saved. We'll pick this up next time you're online.") +
+        "</p>";
+      leadCard.hidden = false;
+    }
+    iframe.onload = function () { finish(true); };
+    setTimeout(function () { finish(navigator.onLine !== false); }, 6000);
+    document.body.appendChild(iframe);
+    document.body.appendChild(form);
+    form.submit();
+  });
+
   refresh();
+  maybeShowLead();
 })();
