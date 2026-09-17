@@ -189,36 +189,39 @@
   var PING_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe2s_ZhuHrEBCeh708tqdRFt2JwERroPEIPQXIY3OYSwuFczA/formResponse";
   var PING_ENTRY = { game: "entry.796797999", refcode: "entry.1576147400" };
 
+  // POST a Google Form the honest way: fetch with no-cors. The promise
+  // resolves when the request is actually sent and rejects on real network
+  // failure (offline, blocked). No fake success states.
+  function postForm(url, fields) {
+    var body = Object.keys(fields).map(function (k) {
+      return encodeURIComponent(k) + "=" + encodeURIComponent(fields[k]);
+    }).join("&");
+    return fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body,
+      keepalive: true
+    });
+  }
+  function postFormTimeout(url, fields, ms) {
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var t = setTimeout(function () { if (!done) { done = true; reject(new Error("timeout")); } }, ms);
+      postForm(url, fields).then(
+        function () { if (!done) { done = true; clearTimeout(t); resolve(); } },
+        function (e) { if (!done) { done = true; clearTimeout(t); reject(e); } });
+    });
+  }
+
   // Anonymous usage ping: one per "We did it" tap. No personal data.
   function pingUsage(gameTitle) {
     if (!gameTitle || navigator.onLine === false) return;
     try {
-      var iframe = document.createElement("iframe");
-      iframe.name = "gpsk_ping_iframe";
-      iframe.style.display = "none";
-      var form = document.createElement("form");
-      form.method = "POST";
-      form.action = PING_URL;
-      form.target = "gpsk_ping_iframe";
       var fields = {};
       fields[PING_ENTRY.game] = gameTitle;
       fields[PING_ENTRY.refcode] = getRefCode();
-      Object.keys(fields).forEach(function (k) {
-        var inp = document.createElement("input");
-        inp.type = "hidden";
-        inp.name = k;
-        inp.value = fields[k];
-        form.appendChild(inp);
-      });
-      document.body.appendChild(iframe);
-      document.body.appendChild(form);
-      form.submit();
-      setTimeout(function () {
-        try {
-          document.body.removeChild(form);
-          document.body.removeChild(iframe);
-        } catch (e) {}
-      }, 15000);
+      postForm(PING_URL, fields).catch(function () {});
     } catch (e) {}
   }
 
@@ -338,43 +341,24 @@
     btn.disabled = true;
     btn.textContent = "Joining...";
 
-    // POST to Google Form through a hidden iframe (no CORS issues).
-    var iframe = document.createElement("iframe");
-    iframe.name = "gpsk_lead_iframe";
-    iframe.style.display = "none";
-    var form = document.createElement("form");
-    form.method = "POST";
-    form.action = FORM_URL;
-    form.target = "gpsk_lead_iframe";
+    // POST to Google Form with fetch (no-cors). "You are in." shows only
+    // after the request is actually sent. A real failure keeps the form
+    // usable with a retry message instead of a fake confirmation.
     var fields = {};
     fields[ENTRY.name] = name;
     fields[ENTRY.email] = email;
     fields[ENTRY.refby] = getReferredBy();
     fields[ENTRY.refcode] = getRefCode();
-    Object.keys(fields).forEach(function (k) {
-      var inp = document.createElement("input");
-      inp.type = "hidden";
-      inp.name = k;
-      inp.value = fields[k];
-      form.appendChild(inp);
-    });
-    var settled = false;
-    function finish(ok) {
-      if (settled) return;
-      settled = true;
+    postFormTimeout(FORM_URL, fields, 15000).then(function () {
       setLeadState("done");
       leadCard.innerHTML = '<div class="lead-title">You are in.</div>' +
-        '<p class="lead-sub">' +
-        (ok ? "Tomorrow's game lands in your inbox at 7 AM."
-            : "Saved. We'll pick this up next time you're online.") +
-        "</p>";
-      leadCard.hidden = false;
-    }
-    iframe.onload = function () { finish(true); };
-    setTimeout(function () { finish(navigator.onLine !== false); }, 6000);
-    document.body.appendChild(iframe);
-    document.body.appendChild(form);
-    form.submit();
+        '<p class="lead-sub">Tomorrow\'s game lands in your inbox at 7 AM.</p>';
+    }, function () {
+      btn.disabled = false;
+      btn.textContent = "Send me tomorrow's game";
+      msg.hidden = false;
+      msg.textContent = "Hmm, that didn't go through. Check your connection and try again.";
+    });
   });
 
   refresh();
