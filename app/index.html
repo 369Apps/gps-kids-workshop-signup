@@ -26,6 +26,7 @@
         <div class="brand-sub">Daily speaking games</div>
       </div>
     </div>
+    <button id="share-btn" class="share-btn" aria-label="Share this app">Share</button>
   </header>
 
   <div id="install-banner" class="install-banner" hidden>
@@ -48,6 +49,18 @@
         </div>
         <button id="done-btn" class="done-btn">We did it</button>
         <div id="streak-line" class="streak-line"></div>
+      </div>
+
+      <div id="lead-card" class="lead-card" hidden>
+        <div class="lead-title">Want tomorrow's game in your inbox?</div>
+        <p class="lead-sub">One short email each morning with the day's game. No spam, unsubscribe anytime.</p>
+        <div class="lead-form">
+          <input id="lead-name" type="text" placeholder="Your name" autocomplete="name" maxlength="80">
+          <input id="lead-email" type="email" placeholder="Email address" autocomplete="email" maxlength="120" inputmode="email">
+          <button id="lead-submit" class="lead-btn">Send me tomorrow's game</button>
+          <button id="lead-dismiss" class="lead-skip">Not now</button>
+        </div>
+        <div id="lead-msg" class="lead-msg" hidden></div>
       </div>
     </section>
 
@@ -80,6 +93,8 @@
     <button class="tab-btn" data-tab="streak">Streak</button>
     <button class="tab-btn" data-tab="library">Games</button>
   </nav>
+
+  <div id="toast" class="toast" hidden></div>
 
 </div>
 <script src="prompts.js"></script>
