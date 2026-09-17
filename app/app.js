@@ -71,6 +71,7 @@
 
     doneBtn.textContent = isDone ? "Done for today. Nice work." : "We did it";
     doneBtn.classList.toggle("done", isDone);
+    document.getElementById("share-nudge").hidden = !isDone;
 
     if (info.streak > 0) {
       streakLine.innerHTML = "<strong>" + info.streak + "</strong> day" +
@@ -283,9 +284,8 @@
     setTimeout(function () { t.classList.remove("show"); t.hidden = true; }, 3000);
   }
 
-  document.getElementById("share-btn").addEventListener("click", function () {
+  function doShare(text) {
     var link = APP_URL + "?ref=" + getRefCode();
-    var text = "We've been playing one 5-minute speaking game a night from this little app. My kid actually asks for it now. Thought yours might like it too:";
     if (navigator.share) {
       navigator.share({ title: "GPS Kids Daily", text: text, url: link }).catch(function () {});
     } else if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -295,6 +295,15 @@
     } else {
       window.prompt("Copy this link and send it to a parent:", link);
     }
+  }
+
+  document.getElementById("share-btn").addEventListener("click", function () {
+    doShare("We've been playing one 5-minute speaking game a night from this little app. My kid actually asks for it now. Thought yours might like it too:");
+  });
+
+  // Share nudge: fires right at the "We did it" win, with tonight's game in the text.
+  document.getElementById("share-win-btn").addEventListener("click", function () {
+    doShare("We just played '" + currentGameTitle + "' at dinner. 5 minutes, no prep, my kid loved it. Free game every night here:");
   });
 
   // ---- Soft lead capture: ask once after the first "We did it" ----
