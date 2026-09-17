@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v2 (lead capture + referrals) */
-var CACHE = "gpsk-daily-v2";
+/* GPS Kids Daily - offline cache, v3 (anonymous usage pings) */
+var CACHE = "gpsk-daily-v3";
 var FILES = [
   "./",
   "./index.html",
