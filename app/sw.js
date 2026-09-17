@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v3 (anonymous usage pings) */
-var CACHE = "gpsk-daily-v3";
+/* GPS Kids Daily - offline cache, v4 (form POSTs bypass the worker) */
+var CACHE = "gpsk-daily-v4";
 var FILES = [
   "./",
   "./index.html",
@@ -30,6 +30,7 @@ self.addEventListener("activate", function (e) {
 });
 
 self.addEventListener("fetch", function (e) {
+  if (e.request.method !== "GET") return; // let form POSTs go straight to the network
   e.respondWith(
     caches.match(e.request).then(function (hit) {
       return hit || fetch(e.request);
