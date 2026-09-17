@@ -269,7 +269,7 @@
     var m = /[?&]ref=([A-Za-z0-9-]+)/.exec(location.search);
     if (m) {
       var inbound = decodeURIComponent(m[1]).toUpperCase();
-      if (/^GK-[A-Z0-9]{6}$/.test(inbound) && inbound !== getRefCode() && !getReferredBy()) {
+      if (/^GK-[A-Z0-9]{5,8}$/.test(inbound) && inbound !== getRefCode() && !getReferredBy()) {
         try { localStorage.setItem(REFBY_KEY, inbound); } catch (e) {}
       }
       try { history.replaceState(null, "", location.pathname + location.hash); } catch (e) {}
