@@ -22,6 +22,14 @@ body {
 .topbar {
   padding: 20px 20px 12px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+
+.share-btn {
+  padding: 10px 18px;
+  background: rgba(255,209,102,0.12); color: var(--yellow);
+  border: 1px solid rgba(255,209,102,0.5); border-radius: 999px;
+  font-size: 14px; font-weight: 800; cursor: pointer;
 }
 
 .brand { display: flex; align-items: center; gap: 12px; }
@@ -148,3 +156,41 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
   color: var(--muted); font-size: 15px; font-weight: 700; cursor: pointer;
 }
 .tab-btn.active { color: var(--yellow); }
+
+.lead-card {
+  margin: 16px 20px 0; padding: 22px 20px;
+  background: linear-gradient(160deg, #2a3358, #232c52);
+  border-radius: 18px;
+  border: 1px solid rgba(255,209,102,0.35);
+}
+.lead-title { font-size: 19px; font-weight: 800; margin: 0 0 6px; }
+.lead-sub { color: var(--muted); font-size: 14px; line-height: 1.5; margin: 0 0 14px; }
+.lead-form input {
+  width: 100%; margin-bottom: 10px; padding: 14px;
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.15);
+  background: #12172e; color: var(--ink); font-size: 16px;
+}
+.lead-form input:focus { outline: none; border-color: var(--yellow); }
+.lead-btn {
+  width: 100%; padding: 15px;
+  background: var(--yellow); color: var(--navy);
+  border: none; border-radius: 14px;
+  font-size: 16px; font-weight: 800; cursor: pointer;
+}
+.lead-btn:disabled { opacity: 0.6; }
+.lead-skip {
+  width: 100%; margin-top: 8px; padding: 10px;
+  background: none; border: none; color: var(--muted);
+  font-size: 14px; cursor: pointer;
+}
+.lead-msg { margin-top: 10px; font-size: 14px; color: var(--yellow); line-height: 1.5; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 86px; transform: translateX(-50%) translateY(10px);
+  background: #0d1226; color: var(--ink);
+  border: 1px solid rgba(255,209,102,0.5); border-radius: 12px;
+  padding: 12px 18px; font-size: 14px; max-width: 86%;
+  opacity: 0; transition: opacity 0.25s, transform 0.25s;
+  pointer-events: none; z-index: 50; text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
