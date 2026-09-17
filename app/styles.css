@@ -101,6 +101,20 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
 .streak-line { text-align: center; margin-top: 14px; color: var(--muted); font-size: 14px; }
 .streak-line strong { color: var(--yellow); }
 
+.share-nudge {
+  margin-top: 16px; padding: 14px 16px;
+  background: rgba(255,209,102,0.1);
+  border: 1px solid rgba(255,209,102,0.35);
+  border-radius: 12px; text-align: center;
+}
+.share-nudge p { margin: 0 0 10px; font-size: 14px; line-height: 1.5; }
+.share-win-btn {
+  width: 100%; padding: 13px;
+  background: var(--yellow); color: var(--navy);
+  border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 800; cursor: pointer;
+}
+
 .streak-big { font-size: 96px; font-weight: 800; color: var(--yellow); line-height: 1; margin-top: 8px; }
 .streak-word { font-size: 18px; margin-top: 4px; }
 .muted { color: var(--muted); font-size: 14px; line-height: 1.5; }
