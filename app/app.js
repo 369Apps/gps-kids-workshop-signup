@@ -51,6 +51,7 @@
   document.getElementById("today-dayname").textContent = DAY_NAMES[gameIndex] + "'s game";
   document.getElementById("today-time").textContent = game.time;
   document.getElementById("today-title").textContent = game.title;
+  var currentGameTitle = game.title;
   document.getElementById("today-tagline").textContent = game.tagline;
   var stepsEl = document.getElementById("today-steps");
   game.steps.forEach(function (s) {
@@ -106,8 +107,13 @@
   doneBtn.addEventListener("click", function () {
     var done = loadDone();
     var i = done.indexOf(todayS);
-    if (i === -1) done.push(todayS);
-    else done.splice(i, 1);
+    var markingDone = (i === -1);
+    if (markingDone) {
+      done.push(todayS);
+      pingUsage(currentGameTitle);
+    } else {
+      done.splice(i, 1);
+    }
     saveDone(done);
     refresh();
     maybeShowLead();
@@ -180,6 +186,42 @@
     try { localStorage.setItem("gpsk_install_dismissed", "1"); } catch (e) {}
   });
 
+  var PING_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe2s_ZhuHrEBCeh708tqdRFt2JwERroPEIPQXIY3OYSwuFczA/formResponse";
+  var PING_ENTRY = { game: "entry.796797999", refcode: "entry.1576147400" };
+
+  // Anonymous usage ping: one per "We did it" tap. No personal data.
+  function pingUsage(gameTitle) {
+    if (!gameTitle || navigator.onLine === false) return;
+    try {
+      var iframe = document.createElement("iframe");
+      iframe.name = "gpsk_ping_iframe";
+      iframe.style.display = "none";
+      var form = document.createElement("form");
+      form.method = "POST";
+      form.action = PING_URL;
+      form.target = "gpsk_ping_iframe";
+      var fields = {};
+      fields[PING_ENTRY.game] = gameTitle;
+      fields[PING_ENTRY.refcode] = getRefCode();
+      Object.keys(fields).forEach(function (k) {
+        var inp = document.createElement("input");
+        inp.type = "hidden";
+        inp.name = k;
+        inp.value = fields[k];
+        form.appendChild(inp);
+      });
+      document.body.appendChild(iframe);
+      document.body.appendChild(form);
+      form.submit();
+      setTimeout(function () {
+        try {
+          document.body.removeChild(form);
+          document.body.removeChild(iframe);
+        } catch (e) {}
+      }, 15000);
+    } catch (e) {}
+  }
+
   // ---- Referral codes, sharing, lead capture (v2) ----
   var REF_KEY = "gpsk_refcode_v1";
   var REFBY_KEY = "gpsk_referred_by_v1";
@@ -187,10 +229,10 @@
   var APP_URL = "https://register.joingpskids.com/app/";
   var FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfasXtI7ylt7MWxhmz8UU9yj84jyyhxqngrOkWL0Rftjrcl2A/formResponse";
   var ENTRY = {
-    name: "entry.1755577904",
-    email: "entry.222235729",
-    refby: "entry.2128729704",
-    refcode: "entry.1405261165"
+    name: "entry.915876472",
+    email: "entry.298491126",
+    refby: "entry.762823434",
+    refcode: "entry.962628300"
   };
 
   function getRefCode() {
