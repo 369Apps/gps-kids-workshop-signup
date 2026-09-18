@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>GPS Kids Daily - Tonight's Speaking Game</title>
-<meta name="description" content="One 5-minute speaking game a day for your dinner table. Build a confident kid, one game at a time.">
+<meta name="description" content="One 6-min speaking game a day for your dinner table. Build a confident kid, one game at a time.">
 <meta name="theme-color" content="#1a2040">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -74,6 +74,10 @@
         <div class="eyebrow">Your streak</div>
         <div class="streak-big"><span id="streak-num">0</span></div>
         <div class="streak-word" id="streak-word">day streak</div>
+        <div class="level-badge" id="level-badge" hidden>
+          <div class="level-name" id="level-name"></div>
+          <div class="level-next" id="level-next"></div>
+        </div>
         <p class="muted" id="streak-note"></p>
         <div class="week-dots" id="week-dots"></div>
         <div class="total-line">Total games played: <strong id="total-num">0</strong></div>
@@ -99,6 +103,7 @@
   </nav>
 
   <div id="toast" class="toast" hidden></div>
+  <div id="confetti-layer" class="confetti-layer"></div>
 
 </div>
 <script src="prompts.js"></script>
