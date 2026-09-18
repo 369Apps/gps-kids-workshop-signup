@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v5 (form POSTs bypass the worker) */
-var CACHE = "gpsk-daily-v5";
+/* GPS Kids Daily - offline cache, v6 (form POSTs bypass the worker) */
+var CACHE = "gpsk-daily-v6";
 var FILES = [
   "./",
   "./index.html",
