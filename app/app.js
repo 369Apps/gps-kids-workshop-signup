@@ -64,6 +64,54 @@
   var doneBtn = document.getElementById("done-btn");
   var streakLine = document.getElementById("streak-line");
 
+  // ---- Speaker levels: progression titles by total games played ----
+  var LEVELS = [
+    { at: 1, name: "Rookie Voice" },
+    { at: 3, name: "Table Talker" },
+    { at: 7, name: "Week Warrior" },
+    { at: 14, name: "Confident Speaker" },
+    { at: 30, name: "Dinner Table Champion" },
+    { at: 60, name: "Legend in the Making" }
+  ];
+  function levelFor(total) {
+    var idx = -1, next = null, i;
+    for (i = 0; i < LEVELS.length; i++) {
+      if (total >= LEVELS[i].at) idx = i;
+      else { next = LEVELS[i]; break; }
+    }
+    return { idx: idx, name: idx >= 0 ? LEVELS[idx].name : "", next: next };
+  }
+
+  var WIN_MSGS = [
+    "Your voice just got braver.",
+    "Confidence rep banked.",
+    "Louder, prouder, stronger.",
+    "Your kid just out-spoke yesterday.",
+    "That's how leaders are made.",
+    "One more rep. The mic fears you now."
+  ];
+  var COACH_TWIST = "Twist for tomorrow: let your kid run the game. Coaches learn fastest.";
+
+  function celebrate() {
+    var layer = document.getElementById("confetti-layer");
+    if (!layer) return;
+    var colors = ["#ffd166", "#ffffff", "#7bdff2", "#ffb3c7", "#f4f6ff"];
+    for (var i = 0; i < 70; i++) {
+      (function () {
+        var p = document.createElement("div");
+        p.className = "confetti-piece";
+        var size = 6 + Math.random() * 8;
+        p.style.left = (Math.random() * 100) + "vw";
+        p.style.width = size + "px";
+        p.style.height = (size * 0.6) + "px";
+        p.style.background = colors[Math.floor(Math.random() * colors.length)];
+        p.style.animationDuration = (1.8 + Math.random() * 1.6) + "s";
+        layer.appendChild(p);
+        setTimeout(function () { p.remove(); }, 3600);
+      })();
+    }
+  }
+
   function refresh() {
     var done = loadDone();
     var info = streakInfo(done);
@@ -83,6 +131,21 @@
     document.getElementById("streak-num").textContent = info.streak;
     document.getElementById("streak-word").textContent = info.streak === 1 ? "day streak" : "day streak";
     document.getElementById("total-num").textContent = info.total;
+
+    var lvl = levelFor(info.total);
+    var badge = document.getElementById("level-badge");
+    if (badge) {
+      badge.hidden = false;
+      if (lvl.idx >= 0) {
+        document.getElementById("level-name").textContent = lvl.name;
+        document.getElementById("level-next").textContent = lvl.next
+          ? (lvl.next.at - info.total) + " more game" + ((lvl.next.at - info.total) === 1 ? "" : "s") + " to " + lvl.next.name
+          : "Max level. Absolute legend.";
+      } else {
+        document.getElementById("level-name").textContent = "No title yet";
+        document.getElementById("level-next").textContent = "Play tonight's game to earn your first title.";
+      }
+    }
 
     var note = document.getElementById("streak-note");
     if (info.streak >= 7) note.textContent = "A full week of speaking up. Most adults can't do that.";
@@ -109,6 +172,7 @@
     var done = loadDone();
     var i = done.indexOf(todayS);
     var markingDone = (i === -1);
+    var beforeLevel = levelFor(done.length).idx;
     if (markingDone) {
       done.push(todayS);
       pingUsage(currentGameTitle);
@@ -117,6 +181,17 @@
     }
     saveDone(done);
     refresh();
+    if (markingDone) {
+      celebrate();
+      var afterLevel = levelFor(done.length).idx;
+      if (afterLevel > beforeLevel) {
+        toast("LEVEL UP! " + LEVELS[afterLevel].name + "!");
+      } else if (done.length % 3 === 0) {
+        toast(COACH_TWIST);
+      } else {
+        toast(WIN_MSGS[Math.floor(Math.random() * WIN_MSGS.length)]);
+      }
+    }
     maybeShowLead();
   });
 
@@ -298,12 +373,12 @@
   }
 
   document.getElementById("share-btn").addEventListener("click", function () {
-    doShare("We've been playing one 5-minute speaking game a night from this little app. My kid actually asks for it now. Thought yours might like it too:");
+    doShare("We've been playing one 6-min speaking game a night from this little app. My kid actually asks for it now. Thought yours might like it too:");
   });
 
   // Share nudge: fires right at the "We did it" win, with tonight's game in the text.
   document.getElementById("share-win-btn").addEventListener("click", function () {
-    doShare("We just played '" + currentGameTitle + "' at dinner. 5 minutes, no prep, my kid loved it. Free game every night here:");
+    doShare("We just played '" + currentGameTitle + "' at dinner. 6 minutes, no prep, my kid loved it. Free game every night here:");
   });
 
   // ---- Soft lead capture: ask once after the first "We did it" ----
