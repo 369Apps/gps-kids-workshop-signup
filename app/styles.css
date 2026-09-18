@@ -132,6 +132,19 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
 .total-line { margin-top: 14px; color: var(--muted); font-size: 14px; }
 .total-line strong { color: var(--ink); }
 
+.level-badge {
+  margin-top: 14px; padding: 12px 16px;
+  background: rgba(255,209,102,0.1);
+  border: 1px solid rgba(255,209,102,0.35);
+  border-radius: 12px;
+}
+.level-name { color: var(--yellow); font-weight: 800; font-size: 18px; }
+.level-next { color: var(--muted); font-size: 13px; margin-top: 4px; }
+
+.confetti-layer { position: fixed; inset: 0; pointer-events: none; z-index: 60; overflow: hidden; }
+.confetti-piece { position: absolute; top: -14px; border-radius: 2px; animation: confetti-fall linear forwards; }
+@keyframes confetti-fall { to { transform: translateY(112vh) rotate(720deg); opacity: 0.85; } }
+
 .lib-card {
   margin: 12px 20px 0; background: var(--navy2);
   border-radius: 14px; border: 1px solid rgba(255,255,255,0.07);
