@@ -163,6 +163,10 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
 .lib-body p { color: var(--muted); font-size: 14px; line-height: 1.5; }
 .lib-body ol { padding-left: 20px; margin: 8px 0; }
 .lib-body li { font-size: 14px; line-height: 1.55; margin: 6px 0; }
+.lib-week {
+  margin: 22px 24px 2px; font-size: 12px; font-weight: 800;
+  color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;
+}
 
 .community { text-align: center; padding: 26px 20px 10px; }
 .community p { color: var(--muted); font-size: 14px; margin: 0 0 12px; }
