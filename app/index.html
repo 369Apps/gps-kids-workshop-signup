@@ -59,8 +59,8 @@
         <div class="lead-title">Want tomorrow's game in your inbox?</div>
         <p class="lead-sub">One short email each morning with the day's game. No spam, unsubscribe anytime.</p>
         <div class="lead-form">
-          <input id="lead-name" type="text" placeholder="Your name" autocomplete="name" maxlength="80">
-          <input id="lead-email" type="email" placeholder="Email address" autocomplete="email" maxlength="120" inputmode="email">
+          <input id="lead-name" type="text" aria-label="Your name" placeholder="Your name" autocomplete="name" maxlength="80">
+          <input id="lead-email" type="email" aria-label="Email address" placeholder="Email address" autocomplete="email" maxlength="120" inputmode="email">
           <button id="lead-submit" class="lead-btn">Send me tomorrow's game</button>
           <button id="lead-dismiss" class="lead-skip">Not now</button>
         </div>
@@ -97,7 +97,7 @@
       <div class="game-card" id="lb-join" hidden>
         <p><strong>Put your family on the board.</strong><br>Ranked by streak. Only families who join show up.</p>
         <div class="lb-join-row">
-          <input id="lb-nick" type="text" maxlength="24" placeholder="Family nickname, e.g. The Dinner Champs" autocomplete="off">
+          <input id="lb-nick" type="text" maxlength="24" aria-label="Family nickname" placeholder="Family nickname, e.g. The Dinner Champs" autocomplete="off">
           <button id="lb-join-btn" class="btn-primary">Join</button>
         </div>
         <p class="muted small" id="lb-join-msg">Nicknames are public. Use a family nickname, not your child's name.</p>
@@ -113,11 +113,11 @@
     <a class="wa-btn" href="https://chat.whatsapp.com/HRusIUYHTFEEr7JJ4g1gQ4">Join the free parents community</a>
   </footer>
 
-  <nav class="tabbar">
-    <button class="tab-btn active" data-tab="today">Today</button>
-    <button class="tab-btn" data-tab="streak">Streak</button>
-    <button class="tab-btn" data-tab="library">Games</button>
-    <button class="tab-btn" data-tab="leaders">Leaders</button>
+  <nav class="tabbar" role="tablist" aria-label="App sections">
+    <button class="tab-btn active" data-tab="today" role="tab" aria-selected="true" aria-controls="tab-today">Today</button>
+    <button class="tab-btn" data-tab="streak" role="tab" aria-selected="false" aria-controls="tab-streak">Streak</button>
+    <button class="tab-btn" data-tab="library" role="tab" aria-selected="false" aria-controls="tab-library">Games</button>
+    <button class="tab-btn" data-tab="leaders" role="tab" aria-selected="false" aria-controls="tab-leaders">Leaders</button>
   </nav>
 
   <div id="toast" class="toast" hidden></div>
