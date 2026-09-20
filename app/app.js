@@ -319,16 +319,35 @@
     }
   }
 
+  var lbData = null;
+
+  function fetchBoard() {
+    return fetch("leaderboard.json?v=" + Date.now()).then(function (r) {
+      if (!r.ok) throw new Error("no board");
+      return r.json();
+    }).then(function (data) {
+      lbData = data;
+      renderBoard(data);
+      return data;
+    }).catch(function () {
+      renderBoard(null);
+      return null;
+    });
+  }
+
   function loadBoard() {
     if (lbLoaded) { refreshBoardUI(); return; }
     lbLoaded = true;
     refreshBoardUI();
-    fetch("leaderboard.json?v=" + Date.now()).then(function (r) {
-      if (!r.ok) throw new Error("no board");
-      return r.json();
-    }).then(renderBoard).catch(function () {
-      renderBoard(null);
-    });
+    fetchBoard();
+  }
+
+  function nickTaken(nick, data) {
+    var mine = getNick().toLowerCase();
+    var want = nick.toLowerCase();
+    if (mine && mine === want) return false;
+    var leaders = (data && data.leaders) || [];
+    return leaders.some(function (e) { return (e.nick || "").toLowerCase() === want; });
   }
 
   function joinBoard() {
@@ -340,18 +359,28 @@
     var btn = document.getElementById("lb-join-btn");
     btn.disabled = true;
     btn.textContent = "Joining...";
-    var fields = {};
-    fields[PING_ENTRY.game] = NICK_PREFIX + nick;
-    fields[PING_ENTRY.refcode] = getRefCode();
-    postFormTimeout(PING_URL, fields, 12000).then(function () {
-      setNick(nick);
-      refreshBoardUI();
-      msg.textContent = "You're in. Your family shows up on the board within the hour.";
-      btn.textContent = "Joined";
-    }).catch(function () {
-      btn.disabled = false;
-      btn.textContent = "Join";
-      msg.textContent = "Couldn't reach the server. Check your connection and try again.";
+    msg.textContent = "";
+    var ready = lbData ? Promise.resolve(lbData) : fetchBoard();
+    ready.then(function (data) {
+      if (nickTaken(nick, data)) {
+        btn.disabled = false;
+        btn.textContent = "Join";
+        msg.textContent = "That nickname is taken. Pick another.";
+        return;
+      }
+      var fields = {};
+      fields[PING_ENTRY.game] = NICK_PREFIX + nick;
+      fields[PING_ENTRY.refcode] = getRefCode();
+      return postFormTimeout(PING_URL, fields, 12000).then(function () {
+        setNick(nick);
+        refreshBoardUI();
+        msg.textContent = "You're in. Your family shows up on the board within the hour.";
+        btn.textContent = "Joined";
+      }).catch(function () {
+        btn.disabled = false;
+        btn.textContent = "Join";
+        msg.textContent = "Couldn't reach the server. Check your connection and try again.";
+      });
     });
   }
 
