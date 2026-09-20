@@ -259,6 +259,104 @@
     });
   }
 
+  // ---- Family leaderboard ----
+  var NICK_KEY = "gpsk_nick_v1";
+  var NICK_PREFIX = "__nickname__:";
+  var lbLoaded = false;
+
+  function getNick() {
+    try { return localStorage.getItem(NICK_KEY) || ""; } catch (e) { return ""; }
+  }
+  function setNick(n) {
+    try { localStorage.setItem(NICK_KEY, n); } catch (e) {}
+  }
+
+  function renderBoard(data) {
+    var list = document.getElementById("lb-list");
+    var mine = getNick().toLowerCase();
+    list.innerHTML = "";
+    var leaders = (data && data.leaders) || [];
+    if (!leaders.length) {
+      var p = document.createElement("p");
+      p.className = "muted center";
+      p.textContent = "No families on the board yet. Be the first.";
+      list.appendChild(p);
+    }
+    var medals = ["\uD83E\uDD47", "\uD83E\uDD48", "\uD83E\uDD49"];
+    leaders.forEach(function (e, i) {
+      var row = document.createElement("div");
+      row.className = "lb-row" + (e.nick.toLowerCase() === mine && mine ? " lb-mine" : "");
+      var rank = document.createElement("span");
+      rank.className = "lb-rank";
+      rank.textContent = i < 3 ? medals[i] : (i + 1);
+      var nick = document.createElement("span");
+      nick.className = "lb-nick";
+      nick.textContent = e.nick;
+      var stat = document.createElement("span");
+      stat.className = "lb-stat";
+      stat.textContent = e.streak + " day streak \u00B7 " + e.total + " games";
+      row.appendChild(rank); row.appendChild(nick); row.appendChild(stat);
+      list.appendChild(row);
+    });
+    var upd = document.getElementById("lb-updated");
+    if (data && data.updated) {
+      var d = new Date(data.updated);
+      upd.textContent = "Updated " + d.toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) + " \u00B7 refreshes hourly";
+    }
+  }
+
+  function refreshBoardUI() {
+    var mine = getNick();
+    var joinCard = document.getElementById("lb-join");
+    var member = document.getElementById("lb-member");
+    if (mine) {
+      joinCard.hidden = true;
+      member.hidden = false;
+      member.textContent = "You're on the board as " + mine + ".";
+    } else {
+      joinCard.hidden = false;
+      member.hidden = true;
+    }
+  }
+
+  function loadBoard() {
+    if (lbLoaded) { refreshBoardUI(); return; }
+    lbLoaded = true;
+    refreshBoardUI();
+    fetch("leaderboard.json?v=" + Date.now()).then(function (r) {
+      if (!r.ok) throw new Error("no board");
+      return r.json();
+    }).then(renderBoard).catch(function () {
+      renderBoard(null);
+    });
+  }
+
+  function joinBoard() {
+    var input = document.getElementById("lb-nick");
+    var msg = document.getElementById("lb-join-msg");
+    var nick = input.value.replace(/\s+/g, " ").trim();
+    if (nick.length < 2) { msg.textContent = "Pick a nickname at least 2 characters long."; return; }
+    if (/^test/i.test(nick)) { msg.textContent = "That nickname is reserved. Pick another."; return; }
+    var btn = document.getElementById("lb-join-btn");
+    btn.disabled = true;
+    btn.textContent = "Joining...";
+    var fields = {};
+    fields[PING_ENTRY.game] = NICK_PREFIX + nick;
+    fields[PING_ENTRY.refcode] = getRefCode();
+    postFormTimeout(PING_URL, fields, 12000).then(function () {
+      setNick(nick);
+      refreshBoardUI();
+      msg.textContent = "You're in. Your family shows up on the board within the hour.";
+      btn.textContent = "Joined";
+    }).catch(function () {
+      btn.disabled = false;
+      btn.textContent = "Join";
+      msg.textContent = "Couldn't reach the server. Check your connection and try again.";
+    });
+  }
+
+  document.getElementById("lb-join-btn").addEventListener("click", joinBoard);
+
   // ---- Tab bar ----
   var tabBtns = document.querySelectorAll(".tab-btn");
   tabBtns.forEach(function (btn) {
@@ -267,6 +365,7 @@
       btn.classList.add("active");
       document.querySelectorAll(".tab").forEach(function (t) { t.classList.remove("active"); });
       document.getElementById("tab-" + btn.getAttribute("data-tab")).classList.add("active");
+      if (btn.getAttribute("data-tab") === "leaders") loadBoard();
       window.scrollTo(0, 0);
     });
   });
