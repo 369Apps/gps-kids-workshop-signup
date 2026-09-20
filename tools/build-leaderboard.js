@@ -23,7 +23,9 @@ const { execFileSync } = require("child_process");
 const ROOT = path.join(__dirname, "..");
 const SHEET_ID = "1MVjJz_xl4sFSw6EkZn51PMkm-nLi7R_kO-Q5RfteQmk";
 const NICK_PREFIX = "__nickname__:";
+const UNDO_PREFIX = "__undo__:";
 const MAX_BOARD = 25;
+const validDay = (s) => (/^\d{4}-\d{2}-\d{2}$/.test(s || "") ? s : null);
 
 function cli(...args) {
   return execFileSync("hatch_gws_cli", args, { encoding: "utf8", maxBuffer: 32 * 1024 * 1024 });
@@ -59,33 +61,43 @@ function cleanNick(raw) {
 
 function main() {
   const raw = cli("sheets", "spreadsheets", "values", "get", "--params",
-    JSON.stringify({ spreadsheetId: SHEET_ID, range: "plays!A:E" }));
+    JSON.stringify({ spreadsheetId: SHEET_ID, range: "plays!A:F" }));
   const rows = JSON.parse(raw).values || [];
   const data = rows.slice(1); // drop header
 
   const registrations = []; // {code, nick, ts}
-  const plays = [];         // {code, day}
+  const plays = [];         // {code, day, game}
+  const undos = [];         // {code, day, game}
   for (const r of data) {
     const ts = r[0] || "", game = r[1] || "", code = (r[2] || "").trim();
     if (!/^GK-[A-Z0-9]{6}$/.test(code)) continue;
     if (game.indexOf(NICK_PREFIX) === 0) {
       const nick = cleanNick(game.slice(NICK_PREFIX.length));
       if (nick && !/^test/i.test(nick)) registrations.push({ code, nick, ts });
+    } else if (game.indexOf(UNDO_PREFIX) === 0) {
+      // un-tap retraction: cancels one matching play
+      const day = validDay(r[5]) || dayOf(ts);
+      if (day) undos.push({ code, day, game: game.slice(UNDO_PREFIX.length) });
     } else if (game && game !== "Verify Game") {
-      const day = dayOf(ts);
-      if (day) plays.push({ code, day });
+      // prefer the date on the player's device; fall back to sheet timestamp
+      const day = validDay(r[5]) || dayOf(ts);
+      if (day) plays.push({ code, day, game });
     }
+  }
+  // apply retractions: each undo removes one matching play (same family, day, game)
+  for (const u of undos) {
+    const i = plays.findIndex((p) => p.code === u.code && p.day === u.day && p.game === u.game);
+    if (i !== -1) plays.splice(i, 1);
   }
   // latest registration per code wins
   registrations.sort((a, b) => (a.ts < b.ts ? -1 : 1));
   const nickByCode = {};
   registrations.forEach((r) => { nickByCode[r.code] = r.nick; });
 
-  // plays per code
-  const daysByCode = {}, totalByCode = {};
+  // plays per code; total counts unique days, not taps
+  const daysByCode = {};
   plays.forEach((p) => {
     (daysByCode[p.code] = daysByCode[p.code] || new Set()).add(p.day);
-    totalByCode[p.code] = (totalByCode[p.code] || 0) + 1;
   });
 
   // first-come nickname wins on collision
@@ -97,7 +109,7 @@ function main() {
     if (seenNick.has(key)) return;
     seenNick.add(key);
     const days = daysByCode[code] || new Set();
-    board.push({ nick, streak: streakOf(days), total: totalByCode[code] || 0 });
+    board.push({ nick, streak: streakOf(days), total: days.size });
   });
   board.sort((a, b) => (b.streak - a.streak) || (b.total - a.total) || (a.nick < b.nick ? -1 : 1));
 
