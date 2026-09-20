@@ -4,7 +4,7 @@ const GAMES = [
   {
     title: "The One-Word Story",
     tagline: "Your kid can't fail this one. The perfect first game.",
-    time: "5 min",
+    time: "3-5 min",
     steps: [
       "Everyone at the table takes a turn answering this: tell us about your day, but start with ONE word that describes how it felt.",
       "Then say one or two sentences about why. Example: Tired, because math homework took forever.",
@@ -15,7 +15,7 @@ const GAMES = [
   {
     title: "The Ad Pitch",
     tagline: "Tonight, your kid sells you dinner like it's on TV.",
-    time: "5 min",
+    time: "3-5 min",
     steps: [
       "Point at tonight's dinner and say: you have 30 seconds. Sell me this meal like it's on TV.",
       "The pitch needs three things: a name for the dish (The Crunchy Champion Pasta!), one reason it's amazing, and a big finish (Buy now, supplies are limited!).",
@@ -26,7 +26,7 @@ const GAMES = [
   {
     title: "Interview Night",
     tagline: "Your kid's a reporter tonight. You're the one getting interviewed.",
-    time: "5 min",
+    time: "3-5 min",
     steps: [
       "Give your kid the reporter job: interview you with 3 questions. If they freeze, suggest starters like: What was your favorite game as a kid? What's something you're proud of?",
       "Then switch. You interview them with the same 3 questions back.",
@@ -37,7 +37,7 @@ const GAMES = [
   {
     title: "The Compliment Mic",
     tagline: "Three minutes. Might be the most meaningful game of the week.",
-    time: "3 min",
+    time: "3-5 min",
     steps: [
       "Go around the table. Each person gives ONE specific compliment to someone else, with eye contact.",
       "The rule: it can't be you're nice. It has to be specific, like: You're good at making me laugh when I'm grumpy.",
@@ -48,7 +48,7 @@ const GAMES = [
   {
     title: "Opinion Minute",
     tagline: "Tonight your kid takes a stand. Bring your silliest debate topic.",
-    time: "5 min",
+    time: "3-5 min",
     steps: [
       "Pick a gloriously silly question. Examples: What's the best ice cream flavor and why? Is a hot dog a sandwich?",
       "Your kid has 60 seconds to take a side and give ONE reason. The reason can be ridiculous, it just has to be theirs.",
@@ -59,7 +59,7 @@ const GAMES = [
   {
     title: "Story Chain",
     tagline: "One sentence each. Your kid goes first and gets the last word.",
-    time: "5 min",
+    time: "3-5 min",
     steps: [
       "Your kid starts a story with ONE sentence. Any sentence: Once there was a dog who could order pizza.",
       "Each person adds one sentence, going around the table twice.",
@@ -70,7 +70,7 @@ const GAMES = [
   {
     title: "The Victory Speech",
     tagline: "Seven days of speaking up. Time for a standing ovation.",
-    time: "5 min",
+    time: "3-5 min",
     steps: [
       "Tonight your kid gives a 60-second speech on this topic: one thing I did this week that I'm proud of.",
       "It can be from these games or anything else.",
