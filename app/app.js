@@ -178,6 +178,7 @@
       pingUsage(currentGameTitle);
     } else {
       done.splice(i, 1);
+      pingUndo(currentGameTitle);
     }
     saveDone(done);
     refresh();
@@ -418,7 +419,79 @@
   });
 
   var PING_URL = "https://docs.google.com/forms/d/e/1FAIpQLSe2s_ZhuHrEBCeh708tqdRFt2JwERroPEIPQXIY3OYSwuFczA/formResponse";
-  var PING_ENTRY = { game: "entry.796797999", refcode: "entry.1576147400" };
+  var PING_ENTRY = {
+    game: "entry.796797999",
+    refcode: "entry.1576147400",
+    clientdate: "entry.2028108120",
+    refby: "entry.1135809654"
+  };
+  var PINGQ_KEY = "gpsk_pingq_v1";
+  var UNDO_PREFIX = "__undo__:";
+
+  function todayLocalStr(d) {
+    d = d || new Date();
+    var p = function (n) { return (n < 10 ? "0" : "") + n; };
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate());
+  }
+
+  function loadPingQ() {
+    try {
+      var q = JSON.parse(localStorage.getItem(PINGQ_KEY) || "[]");
+      return Array.isArray(q) ? q : [];
+    } catch (e) { return []; }
+  }
+  function savePingQ(q) {
+    try { localStorage.setItem(PINGQ_KEY, JSON.stringify(q.slice(-50))); } catch (e) {}
+  }
+
+  function sendPing(ping) {
+    var fields = {};
+    fields[PING_ENTRY.game] = ping.game;
+    fields[PING_ENTRY.refcode] = ping.refcode;
+    fields[PING_ENTRY.clientdate] = ping.date;
+    if (ping.refby) fields[PING_ENTRY.refby] = ping.refby;
+    return postFormTimeout(PING_URL, fields, 12000);
+  }
+
+  // Flush oldest-first. A failed send keeps the queue; the next
+  // load or reconnect retries. Nothing is ever silently dropped.
+  function flushPingQ() {
+    if (typeof navigator !== "undefined" && navigator.onLine === false) return;
+    var q = loadPingQ();
+    if (!q.length) return;
+    sendPing(q[0]).then(function () {
+      savePingQ(q.slice(1));
+      flushPingQ();
+    }).catch(function () { /* retry on next load or reconnect */ });
+  }
+
+  function queuePing(gameTitle, isUndo) {
+    var q = loadPingQ();
+    q.push({
+      game: (isUndo ? UNDO_PREFIX : "") + gameTitle,
+      refcode: getRefCode(),
+      date: todayLocalStr(),
+      refby: getReferredBy() || ""
+    });
+    savePingQ(q);
+    flushPingQ();
+  }
+
+  // Anonymous usage ping: one per "We did it" tap. No personal data.
+  // Queued when offline and flushed later, so a dead zone never eats a play.
+  function pingUsage(gameTitle) {
+    if (!gameTitle) return;
+    try { queuePing(gameTitle, false); } catch (e) {}
+  }
+  // Un-tap sends a retraction so the server never over-counts.
+  function pingUndo(gameTitle) {
+    if (!gameTitle) return;
+    try { queuePing(gameTitle, true); } catch (e) {}
+  }
+  flushPingQ();
+  if (typeof window !== "undefined" && window.addEventListener) {
+    window.addEventListener("online", flushPingQ);
+  }
 
   // POST a Google Form the honest way: fetch with no-cors. The promise
   // resolves when the request is actually sent and rejects on real network
@@ -443,17 +516,6 @@
         function () { if (!done) { done = true; clearTimeout(t); resolve(); } },
         function (e) { if (!done) { done = true; clearTimeout(t); reject(e); } });
     });
-  }
-
-  // Anonymous usage ping: one per "We did it" tap. No personal data.
-  function pingUsage(gameTitle) {
-    if (!gameTitle || navigator.onLine === false) return;
-    try {
-      var fields = {};
-      fields[PING_ENTRY.game] = gameTitle;
-      fields[PING_ENTRY.refcode] = getRefCode();
-      postForm(PING_URL, fields).catch(function () {});
-    } catch (e) {}
   }
 
   // ---- Referral codes, sharing, lead capture (v2) ----
