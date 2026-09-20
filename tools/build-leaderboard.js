@@ -21,6 +21,11 @@ const crypto = require("crypto");
 const { execFileSync } = require("child_process");
 
 const ROOT = path.join(__dirname, "..");
+// App files live under app/ in a fresh repo checkout, but at the local
+// root on this machine. Resolve both layouts so the builder runs anywhere.
+const APP_DIR = fs.existsSync(path.join(ROOT, "app", "index.html"))
+  ? path.join(ROOT, "app")
+  : ROOT;
 const SHEET_ID = "1MVjJz_xl4sFSw6EkZn51PMkm-nLi7R_kO-Q5RfteQmk";
 const NICK_PREFIX = "__nickname__:";
 const UNDO_PREFIX = "__undo__:";
@@ -118,7 +123,7 @@ function main() {
     leaders: board.slice(0, MAX_BOARD),
   };
   const json = JSON.stringify(out, null, 2) + "\n";
-  const localPath = path.join(ROOT, "leaderboard.json");
+  const localPath = path.join(APP_DIR, "leaderboard.json");
   const prev = fs.existsSync(localPath) ? fs.readFileSync(localPath, "utf8") : null;
   // compare ignoring the timestamp line
   const strip = (s) => s.replace(/"updated": "[^"]*",?\n?/, "");
