@@ -196,15 +196,14 @@
   });
 
   // ---- Library tab ----
-  var lib = document.getElementById("library-list");
-  GAMES.forEach(function (g, i) {
+  function addGameCard(container, title, sub, g) {
     var card = document.createElement("div");
     card.className = "lib-card";
 
     var head = document.createElement("button");
     head.className = "lib-head";
-    head.innerHTML = '<span><span class="t">' + g.title + '</span><div class="d">' +
-      DAY_NAMES[i] + " &middot; " + g.time + "</div></span>" + '<span class="chev">+</span>';
+    head.innerHTML = '<span><span class="t">' + title + '</span><div class="d">' +
+      sub + "</div></span>" + '<span class="chev">+</span>';
 
     var body = document.createElement("div");
     body.className = "lib-body";
@@ -229,8 +228,36 @@
 
     card.appendChild(head);
     card.appendChild(body);
-    lib.appendChild(card);
+    container.appendChild(card);
+  }
+
+  function prettyWeek(ymd) {
+    var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var parts = ymd.split("-");
+    return months[parseInt(parts[1], 10) - 1] + " " + parseInt(parts[2], 10);
+  }
+
+  var lib = document.getElementById("library-list");
+  GAMES.forEach(function (g, i) {
+    addGameCard(lib, g.title, DAY_NAMES[i] + " &middot; " + g.time, g);
   });
+
+  // ---- Past weeks (auto-filled every Monday by tools/build-history.js) ----
+  if (typeof GAME_HISTORY !== "undefined" && GAME_HISTORY.length) {
+    var hBrow = document.getElementById("history-eyebrow");
+    if (hBrow) hBrow.hidden = false;
+    var hList = document.getElementById("history-list");
+    GAME_HISTORY.slice().reverse().forEach(function (week) {
+      var wdiv = document.createElement("div");
+      wdiv.className = "lib-week";
+      wdiv.textContent = "Week of " + prettyWeek(week.week);
+      hList.appendChild(wdiv);
+      week.games.forEach(function (g, i) {
+        addGameCard(hList, g.title, DAY_NAMES[i] + " &middot; " + g.time, g);
+      });
+    });
+  }
 
   // ---- Tab bar ----
   var tabBtns = document.querySelectorAll(".tab-btn");
