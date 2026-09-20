@@ -91,6 +91,21 @@
       <div class="eyebrow pad" id="history-eyebrow" hidden>Past weeks</div>
       <div id="history-list"></div>
     </section>
+    <!-- LEADERS TAB -->
+    <section id="tab-leaders" class="tab">
+      <div class="eyebrow pad">Family leaderboard</div>
+      <div class="game-card" id="lb-join" hidden>
+        <p><strong>Put your family on the board.</strong><br>Ranked by streak. Only families who join show up.</p>
+        <div class="lb-join-row">
+          <input id="lb-nick" type="text" maxlength="24" placeholder="Family nickname, e.g. The Dinner Champs" autocomplete="off">
+          <button id="lb-join-btn" class="btn-primary">Join</button>
+        </div>
+        <p class="muted small" id="lb-join-msg">Nicknames are public. Use a family nickname, not your child's name.</p>
+      </div>
+      <div class="lb-member" id="lb-member" hidden></div>
+      <div id="lb-list"></div>
+      <p class="muted small center" id="lb-updated"></p>
+    </section>
   </main>
 
   <footer class="community">
@@ -102,6 +117,7 @@
     <button class="tab-btn active" data-tab="today">Today</button>
     <button class="tab-btn" data-tab="streak">Streak</button>
     <button class="tab-btn" data-tab="library">Games</button>
+    <button class="tab-btn" data-tab="leaders">Leaders</button>
   </nav>
 
   <div id="toast" class="toast" hidden></div>
