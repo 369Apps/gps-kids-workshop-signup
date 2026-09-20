@@ -1,11 +1,12 @@
-/* GPS Kids Daily - offline cache, v6 (form POSTs bypass the worker) */
-var CACHE = "gpsk-daily-v6";
+/* GPS Kids Daily - offline cache, v7 (form POSTs bypass the worker; adds history.js) */
+var CACHE = "gpsk-daily-v7";
 var FILES = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
   "./prompts.js",
+  "./history.js",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png"
