@@ -391,8 +391,9 @@
   var tabBtns = document.querySelectorAll(".tab-btn");
   tabBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
-      tabBtns.forEach(function (b) { b.classList.remove("active"); });
+      tabBtns.forEach(function (b) { b.classList.remove("active"); b.setAttribute("aria-selected", "false"); });
       btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
       document.querySelectorAll(".tab").forEach(function (t) { t.classList.remove("active"); });
       document.getElementById("tab-" + btn.getAttribute("data-tab")).classList.add("active");
       if (btn.getAttribute("data-tab") === "leaders") loadBoard();
