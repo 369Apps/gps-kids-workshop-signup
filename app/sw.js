@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v7 (form POSTs bypass the worker; adds history.js) */
-var CACHE = "gpsk-daily-v7";
+/* GPS Kids Daily - offline cache, v8 (adds leaderboard tab + hourly leaderboard.json) */
+var CACHE = "gpsk-daily-v8";
 var FILES = [
   "./",
   "./index.html",
@@ -7,6 +7,7 @@ var FILES = [
   "./app.js",
   "./prompts.js",
   "./history.js",
+  "./leaderboard.json",
   "./manifest.json",
   "./icon-192.png",
   "./icon-512.png"
@@ -32,6 +33,17 @@ self.addEventListener("activate", function (e) {
 
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return; // let form POSTs go straight to the network
+  // leaderboard.json refreshes hourly: network first, cache as fallback
+  if (/leaderboard\.json/.test(e.request.url)) {
+    e.respondWith(
+      fetch(e.request).then(function (res) {
+        var copy = res.clone();
+        caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+        return res;
+      }).catch(function () { return caches.match(e.request); })
+    );
+    return;
+  }
   e.respondWith(
     caches.match(e.request).then(function (hit) {
       return hit || fetch(e.request);
