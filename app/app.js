@@ -596,7 +596,7 @@
 
   // Share nudge: fires right at the "We did it" win, with tonight's game in the text.
   document.getElementById("share-win-btn").addEventListener("click", function () {
-    doShare("We just played '" + currentGameTitle + "' at dinner. 6 minutes, no prep, my kid loved it. Free game every night here:");
+    doShare("We just played '" + currentGameTitle + "' at dinner. 3-5 minutes, no prep, my kid loved it. Free game every night here:");
   });
 
   // ---- Soft lead capture: ask once after the first "We did it" ----
