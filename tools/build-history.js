@@ -7,6 +7,11 @@ const path = require("path");
 const crypto = require("crypto");
 
 const ROOT = path.join(__dirname, "..");
+// App files live under app/ in a fresh repo checkout, but at the local
+// root on this machine. games-archive/ sits at the repo root in both.
+const APP_DIR = fs.existsSync(path.join(ROOT, "app", "index.html"))
+  ? path.join(ROOT, "app")
+  : ROOT;
 const ARCHIVE = path.join(ROOT, "games-archive");
 
 function loadGames(src) {
@@ -23,7 +28,7 @@ function weekLabel(src, filename) {
   return f ? f[1] : filename.replace(/\.js$/, "");
 }
 
-const currentGames = loadGames(fs.readFileSync(path.join(ROOT, "prompts.js"), "utf8"));
+const currentGames = loadGames(fs.readFileSync(path.join(APP_DIR, "prompts.js"), "utf8"));
 const currentHash = hash(currentGames);
 
 const seen = {};
@@ -45,5 +50,5 @@ const out =
   "var GAME_HISTORY = " +
   JSON.stringify(history, null, 2) +
   ";\n";
-fs.writeFileSync(path.join(ROOT, "history.js"), out);
+fs.writeFileSync(path.join(APP_DIR, "history.js"), out);
 console.log("history.js written with " + history.length + " past week(s).");
