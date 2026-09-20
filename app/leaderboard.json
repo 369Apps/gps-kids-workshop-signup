@@ -1,4 +1,15 @@
 {
-  "updated": "2026-09-20T15:21:51.971Z",
-  "leaders": []
+  "updated": "2026-09-20T15:56:07.441Z",
+  "leaders": [
+    {
+      "nick": "GPSERS",
+      "streak": 1,
+      "total": 5
+    },
+    {
+      "nick": "ZZ Debug Fam",
+      "streak": 0,
+      "total": 1
+    }
+  ]
 }
