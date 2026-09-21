@@ -1,81 +1,82 @@
 /* GPS Kids Daily - the 7 dinner-table games.
-   Monday = game 0, Tuesday = game 1, ... Sunday = game 6. */
+   Monday = game 0, Tuesday = game 1, ... Sunday = game 6.
+   Week of 2026-09-21. */
 const GAMES = [
   {
-    title: "The One-Word Story",
-    tagline: "Your kid can't fail this one. The perfect first game.",
-    time: "3-5 min",
+    title: "Louder Than the Fridge",
+    tagline: "Tonight your kid practices being heard, not just talking.",
+    time: "3 min",
     steps: [
-      "Everyone at the table takes a turn answering this: tell us about your day, but start with ONE word that describes how it felt.",
-      "Then say one or two sentences about why. Example: Tired, because math homework took forever.",
-      "Go around the table. You go first, so your kid sees how easy it is."
+      "You go first. Pick a favorite word and say it three times, each round a little louder. Whisper it, say it normal, then say it like you mean it. Dinner... dinner... DINNER!",
+      "Your kid picks their word and does the same three rounds. Coach them up if round three is not really louder.",
+      "Final round: the whole table shouts your kid's word at full volume together. Loud is fun tonight."
     ],
-    win: "Your kid says their one word without mumbling or looking away. If they manage even one clear word, celebrate it like a touchdown."
+    win: "Your kid's third round is truly loud and they are grinning. That is a kid learning their voice can fill a room."
   },
   {
-    title: "The Ad Pitch",
-    tagline: "Tonight, your kid sells you dinner like it's on TV.",
-    time: "3-5 min",
+    title: "The Lighthouse Look",
+    tagline: "One sentence, eyes up. The quietest brave thing they will do this week.",
+    time: "3 min",
     steps: [
-      "Point at tonight's dinner and say: you have 30 seconds. Sell me this meal like it's on TV.",
-      "The pitch needs three things: a name for the dish (The Crunchy Champion Pasta!), one reason it's amazing, and a big finish (Buy now, supplies are limited!).",
-      "Everyone claps when the pitch ends. Then someone else takes a turn. Yes, you too. Silly voices encouraged."
+      "You go first. Look your kid right in the eyes and say one full sentence about your day. Like: I fixed a problem at work today and it felt good.",
+      "Your kid does the same back to you: eyes on you, one sentence about their day. No staring contest, just friendly eyes.",
+      "Go around the table. Each person speaks their sentence to the person on their left, eye contact the whole time."
     ],
-    win: "Volume. The first time your kid projects their voice for fun instead of shrinking it, that's a confidence rep that counts."
+    win: "Your kid holds your eyes through one whole sentence without looking away. Most kids rush this. The slow ones are the brave ones."
   },
   {
-    title: "Interview Night",
-    tagline: "Your kid's a reporter tonight. You're the one getting interviewed.",
-    time: "3-5 min",
+    title: "The Backwards Rule",
+    tagline: "Your kid takes a stand nobody believes, and defends it anyway.",
+    time: "5 min",
     steps: [
-      "Give your kid the reporter job: interview you with 3 questions. If they freeze, suggest starters like: What was your favorite game as a kid? What's something you're proud of?",
-      "Then switch. You interview them with the same 3 questions back.",
-      "Reporters must make eye contact and say thank you at the end. That's the whole formality."
+      "You go first. Take a silly stand nobody believes and defend it for 30 seconds. Example: Breakfast for dinner is better than dinner for dinner, because pancakes beat soup.",
+      "Your kid picks their own stand and defends it for 30 seconds. The family can ask one tough question each, but no mocking.",
+      "The rule: your kid cannot fold. No never mind, no fine you win. They own their stand to the end."
     ],
-    win: "Your kid asks a follow-up question you didn't suggest. That means they're listening and thinking, the two halves of great speaking."
+    win: "Your kid finishes their 30 seconds still on their side after a tough question. That is backbone, and it transfers to real life."
   },
   {
-    title: "The Compliment Mic",
-    tagline: "Three minutes. Might be the most meaningful game of the week.",
-    time: "3-5 min",
+    title: "Echo It Back",
+    tagline: "Listening is half of speaking. Tonight they practice the half nobody sees.",
+    time: "3 min",
     steps: [
-      "Go around the table. Each person gives ONE specific compliment to someone else, with eye contact.",
-      "The rule: it can't be you're nice. It has to be specific, like: You're good at making me laugh when I'm grumpy.",
-      "The person receiving just says thank you. No deflecting, no oh stop."
+      "You go first as the storyteller. Tell a 30 second story from your day with one real detail in it, like the line at the store was so long.",
+      "Your kid's job: echo back the one detail that mattered, in their own words. Not the whole story, just the heart of it.",
+      "Switch. Your kid tells a short story and you echo back their detail."
     ],
-    win: "Your kid holds eye contact through their whole compliment. Tell them afterward: the way you looked at me when you said that, that was powerful."
+    win: "Your kid echoes your detail without being asked twice. A kid who can repeat what matters is a kid people want to talk to."
   },
   {
-    title: "Opinion Minute",
-    tagline: "Tonight your kid takes a stand. Bring your silliest debate topic.",
-    time: "3-5 min",
+    title: "The Worst Day Award",
+    tagline: "The funniest disaster story wins. Your kid has one, I promise.",
+    time: "5 min",
     steps: [
-      "Pick a gloriously silly question. Examples: What's the best ice cream flavor and why? Is a hot dog a sandwich?",
-      "Your kid has 60 seconds to take a side and give ONE reason. The reason can be ridiculous, it just has to be theirs.",
-      "Then everyone else takes a side too. Disagreeing is fine. Interrupting is not."
+      "You go first. Tell the funniest small disaster story from your life. Keep it under a minute: what happened, what went wrong, how you survived.",
+      "Your kid tells theirs. If they stall, prompt them: what is the worst thing that ever happened to you at school, in one minute?",
+      "The table votes. The best told disaster, not the worst disaster, wins the Worst Day Award."
     ],
-    win: "Your kid defends their opinion when someone disagrees instead of folding. Even one no, because sentence is a huge rep."
+    win: "Your kid's story has a beginning, a middle, and an ending. If they got lost in the middle, that is normal. The win is they got to the end."
   },
   {
-    title: "Story Chain",
-    tagline: "One sentence each. Your kid goes first and gets the last word.",
-    time: "3-5 min",
+    title: "Thank the Invisible",
+    tagline: "Say thank you out loud to someone who is not at the table.",
+    time: "3 min",
     steps: [
-      "Your kid starts a story with ONE sentence. Any sentence: Once there was a dog who could order pizza.",
-      "Each person adds one sentence, going around the table twice.",
-      "Your kid also gets the LAST sentence. They decide how it ends."
+      "You go first. Thank someone out loud who helped you but is not at this table. Say it like they can hear you: Thank you, bus driver Sam, for waiting when I was running late.",
+      "Your kid does the same. If they stall, offer choices: a teacher, a coach, a friend's parent, the lunch lady.",
+      "Everyone's thank you must name one specific thing that person did. No vague thank you for everything."
     ],
-    win: "Your kid's ending sentence. Kids who've been quiet all week often surprise everyone here."
+    win: "Your kid names a real person and one specific thing they did. Specific gratitude said out loud is a speaking skill and a life skill."
   },
   {
-    title: "The Victory Speech",
-    tagline: "Seven days of speaking up. Time for a standing ovation.",
-    time: "3-5 min",
+    title: "The Last-Minute Toast",
+    tagline: "Ten seconds to think, then stand up and toast the family.",
+    time: "3 min",
     steps: [
-      "Tonight your kid gives a 60-second speech on this topic: one thing I did this week that I'm proud of.",
-      "It can be from these games or anything else.",
-      "When they finish, everyone stands up and claps. A real standing ovation, at your dinner table. They earned it."
+      "You go first. Stand up and give a 30 second toast to the family, made up on the spot. Example: To this family, for surviving Monday and for the best spaghetti in town.",
+      "Your kid gets 10 seconds to think, then stands and gives their own toast. Short is fine. Cheesy is encouraged.",
+      "After each toast, everyone raises their glass and takes a sip. This is a ceremony now."
     ],
-    win: "Then tell them this: you spoke up seven days in a row. Most adults can't do that."
+    win: "Your kid raises their glass and toasts without stalling past the 10 seconds. Thinking on their feet is a muscle, and tonight they flexed it."
   }
 ];
