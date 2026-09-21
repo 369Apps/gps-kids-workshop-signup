@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v8 (adds leaderboard tab + hourly leaderboard.json) */
-var CACHE = "gpsk-daily-v11";
+/* GPS Kids Daily - offline cache, v12 (week of 2026-09-21 games) */
+var CACHE = "gpsk-daily-20260921";
 var FILES = [
   "./",
   "./index.html",
