@@ -591,7 +591,7 @@
   }
 
   document.getElementById("share-btn").addEventListener("click", function () {
-    doShare("We've been playing one 6-min speaking game a night from this little app. My kid actually asks for it now. Thought yours might like it too:");
+    doShare("We've been playing one 3-5 minute speaking game a night from this little app. My kid actually asks for it now. Thought yours might like it too:");
   });
 
   // Share nudge: fires right at the "We did it" win, with tonight's game in the text.
