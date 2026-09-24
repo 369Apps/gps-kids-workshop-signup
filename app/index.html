@@ -137,7 +137,15 @@
           <button id="doodle-save" class="btn-primary">Save</button>
           <button id="doodle-share" class="btn-primary">Share</button>
         </div>
-        <p class="muted small center doodle-note">Draw with your finger. Your doodle stays on this phone.</p>
+        <div class="doodle-voice">
+          <button id="doodle-tell" class="btn-voice">Tell about it</button>
+          <div id="doodle-voice-row" class="doodle-voice-row" hidden>
+            <button id="doodle-hear" class="btn-ghost">Hear it</button>
+            <button id="doodle-again" class="btn-ghost">Again</button>
+          </div>
+          <p id="doodle-voice-hint" class="muted small center" hidden></p>
+        </div>
+        <p class="muted small center doodle-note">Draw with your finger, then tell about it. Everything stays on this phone.</p>
       </div>
     </section>
   </main>
