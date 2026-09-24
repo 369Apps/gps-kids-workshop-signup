@@ -46,16 +46,23 @@
     <!-- TODAY TAB -->
     <section id="tab-today" class="tab active">
       <div class="game-card">
+        <div class="today-doodle" id="today-doodle" aria-hidden="true"></div>
         <div class="eyebrow"><span id="today-dayname">Today</span> &middot; <span id="today-time">3-5 min</span> &middot; zero prep</div>
         <h1 id="today-title">Tonight's game</h1>
         <p class="tagline" id="today-tagline"></p>
-        <h2>How to play</h2>
-        <ol class="steps" id="today-steps"></ol>
-        <div class="win-box">
-          <div class="win-label">Win to watch for</div>
+        <div id="play-flow">
+          <button id="play-start" class="play-big">Play</button>
+          <div id="play-step" hidden>
+            <div class="play-count" id="play-count"></div>
+            <p class="play-cue" id="play-cue"></p>
+            <button id="play-next" class="play-big">Next</button>
+          </div>
+        </div>
+        <div class="win-box" id="win-box" hidden>
+          <div class="win-label">You won</div>
           <p id="today-win"></p>
         </div>
-        <button id="done-btn" class="done-btn">We did it</button>
+        <button id="done-btn" class="done-btn" hidden>We did it</button>
         <div id="streak-line" class="streak-line"></div>
         <div id="share-nudge" class="share-nudge" hidden>
           <p>That was a real win. Know a parent whose kid needs this?</p>
@@ -84,6 +91,7 @@
     <!-- STREAK TAB -->
     <section id="tab-streak" class="tab">
       <div class="game-card center">
+        <div class="tab-doodle" id="streak-doodle" aria-hidden="true"></div>
         <div class="eyebrow">Your streak</div>
         <div class="streak-big"><span id="streak-num">0</span></div>
         <div class="streak-word" id="streak-word">day streak</div>
@@ -106,6 +114,7 @@
     </section>
     <!-- LEADERS TAB -->
     <section id="tab-leaders" class="tab">
+      <div class="tab-doodle" id="leaders-doodle" aria-hidden="true"></div>
       <div class="eyebrow pad">Family leaderboard</div>
       <div class="game-card" id="lb-join" hidden>
         <p><strong>Put your family on the board.</strong><br>Ranked by streak. Only families who join show up.</p>
@@ -127,6 +136,7 @@
     <section id="tab-doodle" class="tab">
       <div class="eyebrow pad">Doodle &middot; this week in class</div>
       <div class="game-card">
+        <div class="tab-doodle left" id="draw-doodle" aria-hidden="true"></div>
         <h1 class="doodle-title">Doodle your idea</h1>
         <p class="tagline" id="doodle-learned"></p>
         <p class="doodle-prompt" id="doodle-prompt"></p>
@@ -150,6 +160,7 @@
 
       <div class="eyebrow pad">Pitch card &middot; tonight's class</div>
       <div class="pitch-card">
+        <div class="tab-doodle left" id="pitch-doodle" aria-hidden="true"></div>
         <span class="pitch-chip">HOME PRACTICE</span>
         <h1 class="pitch-title">The pitch card</h1>
         <p class="pitch-sub">Your 3-line pitch, delivered loud.</p>
@@ -197,6 +208,7 @@
 
 </div>
 <script src="prompts.js"></script>
+<script src="doodles.js"></script>
 <script src="history.js"></script>
 <script src="micdrop.js"></script>
 <script src="app.js"></script>
