@@ -120,6 +120,8 @@
     doneBtn.textContent = isDone ? "Done for today. Nice work." : "We did it";
     doneBtn.classList.toggle("done", isDone);
     document.getElementById("share-nudge").hidden = !isDone;
+    document.getElementById("board-nudge").hidden = !isDone || !!getNick();
+    if (typeof lbData !== "undefined" && lbData) updateRecruitLine(lbData);
 
     if (info.streak > 0) {
       streakLine.innerHTML = "<strong>" + info.streak + "</strong> day" +
@@ -304,6 +306,53 @@
       var d = new Date(data.updated);
       upd.textContent = "Updated " + d.toLocaleString([], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }) + " \u00B7 refreshes hourly";
     }
+
+    // recruiters board: nicknames whose links brought new families in
+    var recList = document.getElementById("rec-list");
+    recList.innerHTML = "";
+    var recs = (data && data.recruiters) || [];
+    if (!recs.length) {
+      var rp = document.createElement("p");
+      rp.className = "muted center";
+      rp.textContent = "No recruiters yet. Share your link and be the first.";
+      recList.appendChild(rp);
+    }
+    recs.forEach(function (e, i) {
+      var row = document.createElement("div");
+      row.className = "lb-row" + (e.nick.toLowerCase() === mine && mine ? " lb-mine" : "");
+      var rank = document.createElement("span");
+      rank.className = "lb-rank";
+      rank.textContent = i < 3 ? medals[i] : (i + 1);
+      var nick = document.createElement("span");
+      nick.className = "lb-nick";
+      nick.textContent = e.nick;
+      var stat = document.createElement("span");
+      stat.className = "lb-stat";
+      stat.textContent = "brought " + e.brought + " famil" + (e.brought === 1 ? "y" : "ies");
+      row.appendChild(rank); row.appendChild(nick); row.appendChild(stat);
+      recList.appendChild(row);
+    });
+    updateRecruitLine(data);
+  }
+
+  // Personal referral credit in the share nudge: "your link brought N families"
+  function updateRecruitLine(data) {
+    var line = document.getElementById("recruit-line");
+    var mine = getNick().toLowerCase();
+    var recs = (data && data.recruiters) || [];
+    var found = null;
+    if (mine) {
+      for (var i = 0; i < recs.length; i++) {
+        if ((recs[i].nick || "").toLowerCase() === mine) { found = recs[i]; break; }
+      }
+    }
+    if (found && found.brought > 0) {
+      line.textContent = "Your link has brought " + found.brought +
+        " famil" + (found.brought === 1 ? "y" : "ies") + " into the club. Keep going.";
+      line.hidden = false;
+    } else {
+      line.hidden = true;
+    }
   }
 
   function refreshBoardUI() {
@@ -375,6 +424,8 @@
       return postFormTimeout(PING_URL, fields, 12000).then(function () {
         setNick(nick);
         refreshBoardUI();
+        var bn = document.getElementById("board-nudge");
+        if (bn) bn.hidden = true;
         msg.textContent = "You're in. Your family shows up on the board within the hour.";
         btn.textContent = "Joined";
       }).catch(function () {
@@ -597,6 +648,12 @@
   // Share nudge: fires right at the "We did it" win, with tonight's game in the text.
   document.getElementById("share-win-btn").addEventListener("click", function () {
     doShare("We just played '" + currentGameTitle + "' at dinner. 3-5 minutes, no prep, my kid loved it. Free game every night here:");
+  });
+
+  // Board nudge: one tap from the win moment to the leaderboard join card.
+  document.getElementById("board-nudge-btn").addEventListener("click", function () {
+    var tab = document.querySelector('.tab-btn[data-tab="leaders"]');
+    if (tab) tab.click();
   });
 
   // ---- Soft lead capture: ask once after the first "We did it" ----
