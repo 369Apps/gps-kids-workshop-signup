@@ -288,3 +288,13 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
   border-radius: 12px; padding: 12px 18px; font-size: 15px; font-weight: 700;
 }
 .doodle-note { margin-top: 12px; }
+.doodle-voice { margin-top: 12px; }
+.btn-voice {
+  width: 100%; padding: 14px; font-size: 18px; font-weight: 800;
+  border: none; border-radius: 14px; cursor: pointer;
+  background: var(--yellow); color: #14213d;
+}
+.btn-voice.recording { background: #de4a3e; color: #fff; animation: voicepulse 1s infinite; }
+@keyframes voicepulse { 50% { opacity: 0.65; } }
+.doodle-voice-row { display: flex; gap: 10px; margin-top: 10px; }
+.doodle-voice-row .btn-ghost { flex: 1; }
