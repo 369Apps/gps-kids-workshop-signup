@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v12 (week of 2026-09-21 games) */
-var CACHE = "gpsk-daily-20260921";
+/* GPS Kids Daily - offline cache, v13 (doodle tab) */
+var CACHE = "gpsk-daily-20260924";
 var FILES = [
   "./",
   "./index.html",
@@ -7,6 +7,8 @@ var FILES = [
   "./app.js",
   "./prompts.js",
   "./history.js",
+  "./micdrop.js",
+  "./doodle.js",
   "./leaderboard.json",
   "./manifest.json",
   "./icon-192.png",
