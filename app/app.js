@@ -53,13 +53,43 @@
   document.getElementById("today-title").textContent = game.title;
   var currentGameTitle = game.title;
   document.getElementById("today-tagline").textContent = game.tagline;
-  var stepsEl = document.getElementById("today-steps");
-  game.steps.forEach(function (s) {
-    var li = document.createElement("li");
-    li.textContent = s;
-    stepsEl.appendChild(li);
+  // ---- Step-through player: one cue per screen, no reading ahead ----
+  var playCues = game.cues || game.steps || [];
+  var playFlow = document.getElementById("play-flow");
+  var playStart = document.getElementById("play-start");
+  var playStep = document.getElementById("play-step");
+  var playCount = document.getElementById("play-count");
+  var playCue = document.getElementById("play-cue");
+  var playNext = document.getElementById("play-next");
+  var winBox = document.getElementById("win-box");
+  var stepIdx = -1;
+  function showStep(i) {
+    stepIdx = i;
+    playStart.hidden = true;
+    playStep.hidden = false;
+    playCount.textContent = (i + 1) + " of " + playCues.length;
+    playCue.textContent = playCues[i];
+    playNext.textContent = i === playCues.length - 1 ? "We did it" : "Next";
+  }
+  playStart.addEventListener("click", function () { showStep(0); });
+  playNext.addEventListener("click", function () {
+    if (stepIdx < playCues.length - 1) showStep(stepIdx + 1);
+    else doneBtn.click();
   });
   document.getElementById("today-win").textContent = game.win;
+
+  // Doodles: glanceable cards, minimal reading.
+  function setDoodle(id, svg) {
+    var el = document.getElementById(id);
+    if (el && svg) el.innerHTML = svg;
+  }
+  if (typeof DOODLES !== "undefined") {
+    setDoodle("today-doodle", DOODLES.game[gameIndex]);
+    setDoodle("streak-doodle", DOODLES.streak);
+    setDoodle("leaders-doodle", DOODLES.leaders);
+    setDoodle("draw-doodle", DOODLES.draw);
+    setDoodle("pitch-doodle", DOODLES.mic);
+  }
 
   var doneBtn = document.getElementById("done-btn");
   var streakLine = document.getElementById("streak-line");
@@ -119,6 +149,10 @@
 
     doneBtn.textContent = isDone ? "Done for today. Nice work." : "We did it";
     doneBtn.classList.toggle("done", isDone);
+    // Player visible while playing; celebration (win line) after done.
+    playFlow.hidden = isDone;
+    winBox.hidden = !isDone;
+    doneBtn.hidden = !isDone;
     document.getElementById("share-nudge").hidden = !isDone;
     document.getElementById("board-nudge").hidden = !isDone || !!getNick();
     if (typeof lbData !== "undefined" && lbData) updateRecruitLine(lbData);
@@ -199,13 +233,14 @@
   });
 
   // ---- Library tab ----
-  function addGameCard(container, title, sub, g) {
+  function addGameCard(container, title, sub, g, doodle) {
     var card = document.createElement("div");
     card.className = "lib-card";
 
     var head = document.createElement("button");
     head.className = "lib-head";
-    head.innerHTML = '<span><span class="t">' + title + '</span><div class="d">' +
+    head.innerHTML = '<span class="lib-doodle" aria-hidden="true">' + (doodle || "") + "</span>" +
+      '<span class="lib-text"><span class="t">' + title + '</span><div class="d">' +
       sub + "</div></span>" + '<span class="chev">+</span>';
 
     var body = document.createElement("div");
@@ -243,7 +278,8 @@
 
   var lib = document.getElementById("library-list");
   GAMES.forEach(function (g, i) {
-    addGameCard(lib, g.title, DAY_NAMES[i] + " &middot; " + g.time, g);
+    addGameCard(lib, g.title, DAY_NAMES[i] + " &middot; " + g.time, g,
+      (typeof DOODLES !== "undefined") ? DOODLES.game[i % 7] : "");
   });
 
   // ---- Past weeks (auto-filled every Monday by tools/build-history.js) ----
@@ -257,7 +293,8 @@
       wdiv.textContent = "Week of " + prettyWeek(week.week);
       hList.appendChild(wdiv);
       week.games.forEach(function (g, i) {
-        addGameCard(hList, g.title, DAY_NAMES[i] + " &middot; " + g.time, g);
+        addGameCard(hList, g.title, DAY_NAMES[i] + " &middot; " + g.time, g,
+          (typeof DOODLES !== "undefined") ? DOODLES.game[i % 7] : "");
       });
     });
   }
