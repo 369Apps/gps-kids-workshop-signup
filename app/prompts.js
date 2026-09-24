@@ -4,6 +4,11 @@
 const GAMES = [
   {
     title: "Louder Than the Fridge",
+    cues: [
+      "You go first: say a word 3 times, louder each round.",
+      "Your kid does the same. Round 3 must be truly loud.",
+      "Finale: the whole table shouts their word together.",
+    ],
     tagline: "Tonight your kid practices being heard, not just talking.",
     time: "3 min",
     steps: [
@@ -15,6 +20,11 @@ const GAMES = [
   },
   {
     title: "The Lighthouse Look",
+    cues: [
+      "You go first: one sentence about your day, eyes on them.",
+      "They answer back: one sentence, eyes on you.",
+      "Around the table: each person speaks to the left.",
+    ],
     tagline: "One sentence, eyes up. The quietest brave thing they will do this week.",
     time: "3 min",
     steps: [
@@ -26,6 +36,11 @@ const GAMES = [
   },
   {
     title: "The Backwards Rule",
+    cues: [
+      "You go first: defend a silly stand for 30 seconds.",
+      "Your kid defends theirs. One tough question each.",
+      "Rule: no folding. They own their stand to the end.",
+    ],
     tagline: "Your kid takes a stand nobody believes, and defends it anyway.",
     time: "5 min",
     steps: [
@@ -37,6 +52,11 @@ const GAMES = [
   },
   {
     title: "Echo It Back",
+    cues: [
+      "You tell a 30-second story with one real detail.",
+      "Your kid echoes back the heart of it, their own words.",
+      "Switch: they tell, you echo.",
+    ],
     tagline: "Listening is half of speaking. Tonight they practice the half nobody sees.",
     time: "3 min",
     steps: [
@@ -48,6 +68,11 @@ const GAMES = [
   },
   {
     title: "The Worst Day Award",
+    cues: [
+      "You go first: funniest small disaster, under a minute.",
+      "Your kid tells theirs. Stuck? Ask about school.",
+      "Table votes: best told disaster wins.",
+    ],
     tagline: "The funniest disaster story wins. Your kid has one, I promise.",
     time: "5 min",
     steps: [
@@ -59,6 +84,11 @@ const GAMES = [
   },
   {
     title: "Thank the Invisible",
+    cues: [
+      "You go first: thank someone not at the table, out loud.",
+      "Your kid thanks someone. Offer choices if they stall.",
+      "Every thanks names one specific thing they did.",
+    ],
     tagline: "Say thank you out loud to someone who is not at the table.",
     time: "3 min",
     steps: [
@@ -70,6 +100,11 @@ const GAMES = [
   },
   {
     title: "The Last-Minute Toast",
+    cues: [
+      "You go first: stand up, 30-second toast, made up now.",
+      "Your kid gets 10 seconds, then stands and toasts.",
+      "Everyone raises a glass after each toast. Ceremony.",
+    ],
     tagline: "Ten seconds to think, then stand up and toast the family.",
     time: "3 min",
     steps: [
