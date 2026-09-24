@@ -147,6 +147,35 @@
         </div>
         <p class="muted small center doodle-note">Draw with your finger, then tell about it. Everything stays on this phone.</p>
       </div>
+
+      <div class="eyebrow pad">Pitch card &middot; tonight's class</div>
+      <div class="pitch-card">
+        <span class="pitch-chip">HOME PRACTICE</span>
+        <h1 class="pitch-title">The pitch card</h1>
+        <p class="pitch-sub">Your 3-line pitch, delivered loud.</p>
+        <div class="pitch-fields">
+          <label>1. The product
+            <input id="pitch-product" maxlength="60" placeholder="e.g. The Never-Spill Cup" autocomplete="off">
+          </label>
+          <label>2. Why it is great
+            <input id="pitch-reason" maxlength="120" placeholder="e.g. The lid locks, juice stays in" autocomplete="off">
+          </label>
+          <label>3. The line people remember
+            <input id="pitch-line" maxlength="120" placeholder="e.g. Spill the joke, not the juice!" autocomplete="off">
+          </label>
+        </div>
+        <p class="pitch-say" id="pitch-say" hidden></p>
+        <div class="pitch-voice">
+          <button id="pitch-record" class="btn-voice">Record the pitch</button>
+          <div id="pitch-voice-row" class="doodle-voice-row" hidden>
+            <button id="pitch-hear" class="btn-ghost">Hear it</button>
+            <button id="pitch-again" class="btn-ghost">Again</button>
+          </div>
+          <p id="pitch-voice-hint" class="muted small center" hidden></p>
+        </div>
+        <button id="pitch-share" class="pitch-wa">Share on WhatsApp</button>
+        <p class="muted small center">The recording stays on this phone until you share it.</p>
+      </div>
     </section>
   </main>
 
@@ -172,6 +201,7 @@
 <script src="micdrop.js"></script>
 <script src="app.js"></script>
 <script src="doodle.js"></script>
+<script src="pitch.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
