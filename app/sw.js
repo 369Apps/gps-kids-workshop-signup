@@ -1,11 +1,12 @@
-/* GPS Kids Daily - offline cache, v15 (pitch card) */
-var CACHE = "gpsk-daily-20260924-v15";
+/* GPS Kids Daily - offline cache, v17 (step-through player) */
+var CACHE = "gpsk-daily-20260924-v17";
 var FILES = [
   "./",
   "./index.html",
   "./styles.css",
   "./app.js",
   "./prompts.js",
+  "./doodles.js",
   "./history.js",
   "./micdrop.js",
   "./doodle.js",
