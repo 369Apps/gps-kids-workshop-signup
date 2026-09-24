@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v13 (doodle tab) */
-var CACHE = "gpsk-daily-20260924";
+/* GPS Kids Daily - offline cache, v14 (doodle voice note) */
+var CACHE = "gpsk-daily-20260924-v14";
 var FILES = [
   "./",
   "./index.html",
