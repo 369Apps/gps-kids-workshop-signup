@@ -122,6 +122,24 @@
       <div id="rec-list"></div>
       <p class="muted small center" id="lb-updated"></p>
     </section>
+
+    <!-- DOODLE TAB -->
+    <section id="tab-doodle" class="tab">
+      <div class="eyebrow pad">Doodle &middot; this week in class</div>
+      <div class="game-card">
+        <h1 class="doodle-title">Doodle your idea</h1>
+        <p class="tagline" id="doodle-learned"></p>
+        <p class="doodle-prompt" id="doodle-prompt"></p>
+        <canvas id="doodle-canvas"></canvas>
+        <div class="doodle-colors" id="doodle-colors"></div>
+        <div class="doodle-actions">
+          <button id="doodle-clear" class="btn-ghost">Clear</button>
+          <button id="doodle-save" class="btn-primary">Save</button>
+          <button id="doodle-share" class="btn-primary">Share</button>
+        </div>
+        <p class="muted small center doodle-note">Draw with your finger. Your doodle stays on this phone.</p>
+      </div>
+    </section>
   </main>
 
   <footer class="community">
@@ -131,6 +149,7 @@
 
   <nav class="tabbar" role="tablist" aria-label="App sections">
     <button class="tab-btn active" data-tab="today" role="tab" aria-selected="true" aria-controls="tab-today">Today</button>
+    <button class="tab-btn" data-tab="doodle" role="tab" aria-selected="false" aria-controls="tab-doodle">Doodle</button>
     <button class="tab-btn" data-tab="streak" role="tab" aria-selected="false" aria-controls="tab-streak">Streak</button>
     <button class="tab-btn" data-tab="library" role="tab" aria-selected="false" aria-controls="tab-library">Games</button>
     <button class="tab-btn" data-tab="leaders" role="tab" aria-selected="false" aria-controls="tab-leaders">Leaders</button>
@@ -142,7 +161,9 @@
 </div>
 <script src="prompts.js"></script>
 <script src="history.js"></script>
+<script src="micdrop.js"></script>
 <script src="app.js"></script>
+<script src="doodle.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function () {
