@@ -218,6 +218,7 @@
     }
     saveDone(done);
     refresh();
+    if (lbData) renderWall(lbData); // instant wall update on win/undo
     if (markingDone) {
       celebrate();
       var afterLevel = levelFor(done.length).idx;
@@ -392,11 +393,59 @@
     }
   }
 
+  // ---- Wall of wins: real recent plays from the club, on the Today tab ----
+  var WALL_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  function renderWall(data) {
+    var card = document.getElementById("wall-card");
+    if (!card) return;
+    var line = document.getElementById("wall-line");
+    var list = document.getElementById("wall-list");
+    var recent = (data && data.recent) || [];
+    // Optimistic local win: this device played tonight but the hourly
+    // board has not picked it up yet. Shows up instantly, no waiting.
+    var done = loadDone();
+    var todayShort = WALL_SHORT[new Date().getDay()];
+    var hasToday = false;
+    for (var k = 0; k < recent.length; k++) {
+      if (recent[k].d === todayShort && recent[k].game === currentGameTitle) { hasToday = true; break; }
+    }
+    if (!hasToday && done.indexOf(todayS) !== -1) {
+      recent = [{ d: todayShort, game: currentGameTitle, nick: getNick() || null }].concat(recent);
+    }
+    card.hidden = false;
+    list.innerHTML = "";
+    if (!recent.length) {
+      line.textContent = "No wins on the wall yet this week. Play tonight's game and put the first one up.";
+      return;
+    }
+    line.textContent = recent.length + (recent.length === 1 ? " win" : " wins") +
+      " on the wall this week. Play tonight and add yours.";
+    recent.slice(0, 8).forEach(function (w) {
+      var row = document.createElement("div");
+      row.className = "wall-row";
+      var t = document.createElement("span");
+      t.className = "wall-day";
+      t.textContent = w.d;
+      var g = document.createElement("span");
+      g.className = "wall-game";
+      g.textContent = w.game;
+      row.appendChild(t);
+      row.appendChild(g);
+      if (w.nick) {
+        var n = document.createElement("span");
+        n.className = "wall-nick";
+        n.textContent = w.nick;
+        row.appendChild(n);
+      }
+      list.appendChild(row);
+    });
+  }
+
   function refreshBoardUI() {
     var mine = getNick();
     var joinCard = document.getElementById("lb-join");
-    var member = document.getElementById("lb-member");
-    if (mine) {
+    var member = document.getElementById("lb-member");    if (mine) {
       joinCard.hidden = true;
       member.hidden = false;
       member.textContent = "You're on the board as " + mine + ".";
@@ -415,6 +464,7 @@
     }).then(function (data) {
       lbData = data;
       renderBoard(data);
+      renderWall(data);
       return data;
     }).catch(function () {
       renderBoard(null);
@@ -426,7 +476,7 @@
     if (lbLoaded) { refreshBoardUI(); return; }
     lbLoaded = true;
     refreshBoardUI();
-    fetchBoard();
+    if (!lbData) fetchBoard();
   }
 
   function nickTaken(nick, data) {
@@ -759,4 +809,5 @@
 
   refresh();
   maybeShowLead();
+  fetchBoard(); // loads the wall of wins on the Today tab too
 })();
