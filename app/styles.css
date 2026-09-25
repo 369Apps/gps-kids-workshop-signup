@@ -141,6 +141,20 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
   border-top: 1px dashed rgba(255,209,102,0.35);
 }
 .board-nudge p { margin: 0 0 10px; font-size: 14px; line-height: 1.5; }
+.wall-card {
+  margin: 16px 20px 0; padding: 18px 20px;
+  background: var(--navy2); border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+.wall-line { margin: 8px 0 12px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.wall-row {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 8px 0; border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 14px;
+}
+.wall-day { color: var(--yellow); font-weight: 800; min-width: 34px; }
+.wall-game { flex: 1; }
+.wall-nick { color: var(--muted); font-size: 13px; }
 .board-nudge-btn {
   width: 100%; padding: 12px;
   background: transparent; color: var(--yellow);
