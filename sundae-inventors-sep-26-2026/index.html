@@ -81,7 +81,7 @@
     <div><strong>Cost</strong><span>$20 per child · $10 for siblings · GPS Kids members attend free</span></div>
   </div>
 
-  <span class="spots">4 spots left · 8 of 12 filled</span>
+  <span class="spots" id="spotsBadge">4 spots left · 8 of 12 filled</span>
 
   <div class="card" id="memberCard" style="">
     <h2>Is your child a GPS Kids member?</h2>
@@ -119,6 +119,35 @@
     document.getElementById(isMember ? 'stepMember' : 'stepGuest').style.display = 'block';
     window.scrollTo(0, 0);
   }
+
+  // Live spots counter: polls spots.json (updated from the signup sheet).
+  // Never shows more than capacity; hides the signup flow when sold out.
+  (function () {
+    var badge = document.getElementById('spotsBadge');
+    function render(s) {
+      if (s.sold_out) {
+        badge.textContent = 'Sold out · ' + s.capacity + ' spots filled';
+        ['memberCard', 'stepMember', 'stepGuest'].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+        if (!document.getElementById('soldOutCard')) {
+          var d = document.createElement('div');
+          d.className = 'card';
+          d.id = 'soldOutCard';
+          d.innerHTML = '<h2>All spots are taken</h2><p class="hint">This workshop is full. Join the GPS Kids community to hear about the next one first.</p>';
+          badge.parentNode.insertBefore(d, badge.nextSibling);
+        }
+      } else {
+        badge.textContent = s.spots_left + (s.spots_left === 1 ? ' spot left' : ' spots left') +
+          ' · ' + s.filled + ' of ' + s.capacity + ' filled';
+      }
+    }
+    fetch('spots.json?ts=' + Date.now())
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(render)
+      .catch(function () { /* keep the server-rendered badge */ });
+  })();
 </script>
 </body>
 </html>
