@@ -1,5 +1,47 @@
 {
-  "updated": "2026-09-22T22:44:28.091Z",
+  "updated": "2026-09-25T11:17:48.444Z",
   "leaders": [],
-  "recruiters": []
+  "recruiters": [],
+  "recent": [
+    {
+      "d": "Thu",
+      "game": "Echo It Back",
+      "nick": null
+    },
+    {
+      "d": "Thu",
+      "game": "Echo It Back",
+      "nick": null
+    },
+    {
+      "d": "Thu",
+      "game": "Echo It Back",
+      "nick": null
+    },
+    {
+      "d": "Wed",
+      "game": "The Backwards Rule",
+      "nick": null
+    },
+    {
+      "d": "Sun",
+      "game": "The Victory Speech",
+      "nick": null
+    },
+    {
+      "d": "Sun",
+      "game": "The Victory Speech",
+      "nick": null
+    },
+    {
+      "d": "Fri",
+      "game": "Opinion Minute",
+      "nick": null
+    },
+    {
+      "d": "Fri",
+      "game": "The Compliment Mic",
+      "nick": null
+    }
+  ]
 }
