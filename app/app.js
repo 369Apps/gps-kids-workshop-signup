@@ -738,10 +738,27 @@
   });
 
   // Board nudge: one tap from the win moment to the leaderboard join card.
-  document.getElementById("board-nudge-btn").addEventListener("click", function () {
+  // Deep link ?join=1 lands a family straight on the join card (workshop QR).
+  function goToJoin() {
     var tab = document.querySelector('.tab-btn[data-tab="leaders"]');
     if (tab) tab.click();
-  });
+    var tries = 0;
+    var iv = setInterval(function () {
+      var card = document.getElementById("lb-join");
+      var member = document.getElementById("lb-member");
+      var target = (card && !card.hidden) ? card : (member && !member.hidden ? member : null);
+      var input = document.getElementById("lb-nick");
+      if (target) {
+        clearInterval(iv);
+        try { target.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) { target.scrollIntoView(); }
+        if (target === card && input) {
+          try { input.focus({ preventScroll: true }); } catch (e2) { try { input.focus(); } catch (e3) {} }
+        }
+      } else if (++tries > 40) { clearInterval(iv); }
+    }, 100);
+  }
+  document.getElementById("board-nudge-btn").addEventListener("click", goToJoin);
+  if (/[?&]join=1\b/.test(location.search)) goToJoin();
 
   // ---- Soft lead capture: ask once after the first "We did it" ----
   var leadCard = document.getElementById("lead-card");
