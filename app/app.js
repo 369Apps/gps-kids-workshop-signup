@@ -760,6 +760,148 @@
   document.getElementById("board-nudge-btn").addEventListener("click", goToJoin);
   if (/[?&]join=1\b/.test(location.search)) goToJoin();
 
+  // ---- Win card: a shareable trophy with the family name on it ----
+  // The card is the payoff that finally moves families to name themselves:
+  // the name on the card becomes the leaderboard nickname in one tap.
+  var wincardPanel = document.getElementById("wincard-panel");
+  var wincardName = document.getElementById("wincard-name");
+  var wincardImg = document.getElementById("wincard-img");
+  var wincardActions = document.getElementById("wincard-actions");
+  var wincardJoin = document.getElementById("wincard-join");
+  var wincardCanvas = null;
+
+  function cleanWincardName() {
+    return wincardName.value.replace(/\s+/g, " ").trim().slice(0, 24);
+  }
+
+  document.getElementById("wincard-open").addEventListener("click", function () {
+    wincardPanel.hidden = !wincardPanel.hidden;
+    if (!wincardPanel.hidden) {
+      var nick = getNick();
+      if (nick && !wincardName.value) wincardName.value = nick;
+      document.getElementById("board-nudge").hidden = true; // one join CTA at a time
+      try { wincardName.focus({ preventScroll: true }); } catch (e) { try { wincardName.focus(); } catch (e2) {} }
+    }
+  });
+
+  function wincardFit(ctx, text, maxWidth, base, weight) {
+    var size = base;
+    var fam = "system-ui, -apple-system, sans-serif";
+    ctx.font = weight + " " + size + "px " + fam;
+    while (size > 26 && ctx.measureText(text).width > maxWidth) {
+      size -= 4;
+      ctx.font = weight + " " + size + "px " + fam;
+    }
+  }
+
+  function renderWincard() {
+    var name = cleanWincardName();
+    if (name.length < 2) { toast("Add a name for the card first."); try { wincardName.focus(); } catch (e) {} return; }
+    var canvas = document.createElement("canvas");
+    canvas.width = 1080; canvas.height = 1080;
+    var ctx = canvas.getContext("2d");
+    var W = 1080, cx = W / 2;
+    ctx.fillStyle = "#1a2040";
+    ctx.fillRect(0, 0, W, 1080);
+    ctx.fillStyle = "#ffd166";
+    [[120,180],[940,220],[180,880],[900,860],[540,120],[300,540],[780,560],[120,640],[960,640]].forEach(function (s) {
+      ctx.beginPath(); ctx.arc(s[0], s[1], 10, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#ffd166";
+    ctx.font = "700 44px system-ui, -apple-system, sans-serif";
+    ctx.fillText("G P S   K I D S   D A I L Y", cx, 150);
+    ctx.fillStyle = "#ffffff";
+    wincardFit(ctx, "WE DID IT", W - 160, 150, "800");
+    ctx.fillText("WE DID IT", cx, 320);
+    ctx.fillStyle = "#7bdff2";
+    var gameLine = "\u201c" + currentGameTitle + "\u201d";
+    wincardFit(ctx, gameLine, W - 200, 56, "600");
+    ctx.fillText(gameLine, cx, 400);
+    ctx.strokeStyle = "#ffd166"; ctx.lineWidth = 6;
+    ctx.beginPath(); ctx.arc(cx, 560, 90, 0, Math.PI * 2); ctx.stroke();
+    ctx.fillStyle = "#ffd166";
+    ctx.font = "800 96px system-ui, -apple-system, sans-serif";
+    ctx.fillText("\u2605", cx, 592);
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "600 40px system-ui, -apple-system, sans-serif";
+    ctx.fillText("Tonight\u2019s winner", cx, 730);
+    ctx.fillStyle = "#ffd166";
+    wincardFit(ctx, name, W - 200, 110, "800");
+    ctx.fillText(name, cx, 850);
+    var info = streakInfo(loadDone());
+    var streakLine2 = info.streak > 1 ? info.streak + " day streak. Keep it going." : "Day one of the streak.";
+    ctx.fillStyle = "rgba(255,255,255,0.85)";
+    ctx.font = "500 38px system-ui, -apple-system, sans-serif";
+    ctx.fillText(streakLine2, cx, 930);
+    ctx.fillStyle = "rgba(255,255,255,0.55)";
+    ctx.font = "500 34px system-ui, -apple-system, sans-serif";
+    ctx.fillText("A free game every night", cx, 990);
+    ctx.fillText("register.joingpskids.com/app/", cx, 1032);
+    wincardCanvas = canvas;
+    wincardImg.src = canvas.toDataURL("image/png");
+    wincardImg.hidden = false;
+    wincardActions.hidden = false;
+    wincardJoin.hidden = !!getNick();
+    try { wincardImg.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
+  }
+
+  document.getElementById("wincard-make").addEventListener("click", renderWincard);
+
+  document.getElementById("wincard-save").addEventListener("click", function () {
+    if (!wincardCanvas) return;
+    var a = document.createElement("a");
+    a.download = "gps-kids-win.png";
+    a.href = wincardCanvas.toDataURL("image/png");
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () { a.remove(); }, 100);
+    toast("Saved. Flex it in the group chat.");
+  });
+
+  document.getElementById("wincard-share").addEventListener("click", function () {
+    if (!wincardCanvas) return;
+    var text = "We just won tonight's GPS Kids game. My kid wanted the card. A free game every night, 3 to 5 minutes, here:";
+    var link = APP_URL + "?ref=" + getRefCode();
+    function textFallback() { doShare(text); }
+    try {
+      if (wincardCanvas.toBlob && navigator.canShare) {
+        wincardCanvas.toBlob(function (blob) {
+          if (!blob) { textFallback(); return; }
+          try {
+            var file = new File([blob], "gps-kids-win.png", { type: "image/png" });
+            if (navigator.canShare({ files: [file] })) {
+              navigator.share({ files: [file], title: "GPS Kids win card", text: text, url: link }).catch(function () {});
+            } else textFallback();
+          } catch (e) { textFallback(); }
+        }, "image/png");
+      } else textFallback();
+    } catch (e) { textFallback(); }
+  });
+
+  // The name on the card becomes the board nickname in one tap.
+  document.getElementById("wincard-join-btn").addEventListener("click", function () {
+    var name = cleanWincardName();
+    if (name.length < 2) { toast("Add a name for the card first."); return; }
+    if (/^test/i.test(name)) { toast("That name is reserved. Try another."); return; }
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = "Joining...";
+    var ready = lbData ? Promise.resolve(lbData) : fetchBoard();
+    ready.then(function (data) {
+      if (nickTaken(name, data)) {
+        btn.disabled = false;
+        btn.textContent = "Put us on the board";
+        toast("That name is taken. Try another.");
+        return;
+      }
+      document.getElementById("lb-nick").value = name;
+      joinBoard();
+      wincardJoin.hidden = true;
+      toast("You're in. Your name shows on the board within the hour.");
+    });
+  });
+
   // ---- Soft lead capture: ask once after the first "We did it" ----
   var leadCard = document.getElementById("lead-card");
   function leadState() {
