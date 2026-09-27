@@ -141,6 +141,36 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
   border-top: 1px dashed rgba(255,209,102,0.35);
 }
 .board-nudge p { margin: 0 0 10px; font-size: 14px; line-height: 1.5; }
+.wincard-block {
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed rgba(255,209,102,0.35);
+}
+.wincard-block p { margin: 0 0 10px; font-size: 14px; line-height: 1.5; }
+.wincard-open-btn {
+  width: 100%; padding: 13px;
+  background: var(--yellow); color: var(--navy);
+  border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 800; cursor: pointer;
+}
+.wincard-panel { margin-top: 12px; }
+.wincard-row { display: flex; gap: 8px; }
+.wincard-row input {
+  flex: 1; min-width: 0; padding: 12px; border-radius: 12px;
+  border: 2px solid rgba(255,209,102,0.5);
+  background: rgba(255,255,255,0.06); color: var(--ink);
+  font-size: 16px;
+}
+.wincard-img { width: 100%; border-radius: 12px; margin-top: 12px; display: block; }
+.wincard-actions { display: flex; gap: 8px; margin-top: 10px; }
+.wincard-share-btn {
+  flex: 2; padding: 13px;
+  background: var(--yellow); color: var(--navy);
+  border: none; border-radius: 12px;
+  font-size: 16px; font-weight: 800; cursor: pointer;
+}
+.wincard-actions .btn-ghost { flex: 1; }
+.wincard-join { margin-top: 12px; }
+.wincard-join p { margin: 0 0 10px; font-size: 14px; }
 .wall-card {
   margin: 16px 20px 0; padding: 18px 20px;
   background: var(--navy2); border-radius: 18px;
