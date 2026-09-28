@@ -1,117 +1,117 @@
 /* GPS Kids Daily - the 7 dinner-table games.
    Monday = game 0, Tuesday = game 1, ... Sunday = game 6.
-   Week of 2026-09-21. */
+   Week of 2026-09-28. */
 const GAMES = [
   {
-    title: "Louder Than the Fridge",
+    title: "Shout the Headline",
     cues: [
-      "You go first: say a word 3 times, louder each round.",
-      "Your kid does the same. Round 3 must be truly loud.",
-      "Finale: the whole table shouts their word together.",
+      "You go first: read a silly headline, loud.",
+      "Your kid reads theirs. Louder than yours.",
+      "Final round: everyone shouts at full blast.",
     ],
-    tagline: "Tonight your kid practices being heard, not just talking.",
+    tagline: "Your kid reads the family news like it is breaking, louder every round.",
     time: "3 min",
     steps: [
-      "You go first. Pick a favorite word and say it three times, each round a little louder. Whisper it, say it normal, then say it like you mean it. Dinner... dinner... DINNER!",
-      "Your kid picks their word and does the same three rounds. Coach them up if round three is not really louder.",
-      "Final round: the whole table shouts your kid's word at full volume together. Loud is fun tonight."
+      "You go first. Make up a silly news headline about your family and read it loud, like breaking news: LOCAL DAD EATS THREE PIECES OF GARLIC BREAD.",
+      "Your kid makes up their own headline and reads it even louder than yours. Coach them up if they hold back. The loud one wins.",
+      "Final round: everyone at the table shouts a headline at full blast at the same time. Total news chaos. Nobody wins. Everybody does."
     ],
-    win: "Your kid's third round is truly loud and they are grinning. That is a kid learning their voice can fill a room."
+    win: "Your kid's headline is louder than yours and they are laughing while they say it. Loud plus laughing is the whole point."
   },
   {
-    title: "The Lighthouse Look",
+    title: "The Love Sentence",
     cues: [
-      "You go first: one sentence about your day, eyes on them.",
-      "They answer back: one sentence, eyes on you.",
-      "Around the table: each person speaks to the left.",
+      "You go first: one kind sentence, eyes on them.",
+      "Your kid says one back. Eyes the whole time.",
+      "Around the table: everyone gets a turn.",
     ],
-    tagline: "One sentence, eyes up. The quietest brave thing they will do this week.",
+    tagline: "One full sentence of kindness, eyes locked the whole time.",
     time: "3 min",
     steps: [
-      "You go first. Look your kid right in the eyes and say one full sentence about your day. Like: I fixed a problem at work today and it felt good.",
-      "Your kid does the same back to you: eyes on you, one sentence about their day. No staring contest, just friendly eyes.",
-      "Go around the table. Each person speaks their sentence to the person on their left, eye contact the whole time."
+      "You go first. Look your kid right in the eyes and say one full kind sentence about them. Like: I love how you helped your sister with her homework.",
+      "Your kid does the same to you: eyes on you, one kind sentence. If their eyes drop, pause and wait. No rush. Waiting is part of the game.",
+      "Go around the table until everyone has spoken one sentence to someone else, eyes up the whole time."
     ],
-    win: "Your kid holds your eyes through one whole sentence without looking away. Most kids rush this. The slow ones are the brave ones."
+    win: "Your kid keeps their eyes on you through the whole sentence. Kind words with eye contact land deeper than any sentence said to the floor."
   },
   {
-    title: "The Backwards Rule",
+    title: "Convince the Judge",
     cues: [
-      "You go first: defend a silly stand for 30 seconds.",
-      "Your kid defends theirs. One tough question each.",
-      "Rule: no folding. They own their stand to the end.",
+      "You go first: argue a tiny want, 30 seconds.",
+      "Your kid argues theirs. The table is the judge.",
+      "Losing is fine. Arguing well is the win.",
     ],
-    tagline: "Your kid takes a stand nobody believes, and defends it anyway.",
+    tagline: "Your kid argues for something real tonight. Dessert is on the table.",
     time: "5 min",
     steps: [
-      "You go first. Take a silly stand nobody believes and defend it for 30 seconds. Example: Breakfast for dinner is better than dinner for dinner, because pancakes beat soup.",
-      "Your kid picks their own stand and defends it for 30 seconds. The family can ask one tough question each, but no mocking.",
-      "The rule: your kid cannot fold. No never mind, no fine you win. They own their stand to the end."
+      "You go first. Pick a tiny silly want and argue for it for 30 seconds like you mean it. Example: I deserve the biggest piece of garlic bread, because I cooked the dinner.",
+      "Your kid picks their own want and argues it for 30 seconds. It can be real: dessert tonight, five more minutes of TV. Reasons, not begging.",
+      "The rest of the table plays judge and picks a winner. The rule: losing is fine. Arguing well is the win."
     ],
-    win: "Your kid finishes their 30 seconds still on their side after a tough question. That is backbone, and it transfers to real life."
+    win: "Your kid gives a real reason, not just please. The first time a kid argues with a reason instead of whining, the skill is showing up."
   },
   {
-    title: "Echo It Back",
+    title: "The News Report",
     cues: [
-      "You tell a 30-second story with one real detail.",
-      "Your kid echoes back the heart of it, their own words.",
-      "Switch: they tell, you echo.",
+      "You go first as anchor: ask, then recap the table.",
+      "Your kid anchors next. You answer, they recap.",
+      "Score it together: one detail right is a win.",
     ],
-    tagline: "Listening is half of speaking. Tonight they practice the half nobody sees.",
-    time: "3 min",
-    steps: [
-      "You go first as the storyteller. Tell a 30 second story from your day with one real detail in it, like the line at the store was so long.",
-      "Your kid's job: echo back the one detail that mattered, in their own words. Not the whole story, just the heart of it.",
-      "Switch. Your kid tells a short story and you echo back their detail."
-    ],
-    win: "Your kid echoes your detail without being asked twice. A kid who can repeat what matters is a kid people want to talk to."
-  },
-  {
-    title: "The Worst Day Award",
-    cues: [
-      "You go first: funniest small disaster, under a minute.",
-      "Your kid tells theirs. Stuck? Ask about school.",
-      "Table votes: best told disaster wins.",
-    ],
-    tagline: "The funniest disaster story wins. Your kid has one, I promise.",
+    tagline: "Your kid interviews the table, then reports back like a news anchor.",
     time: "5 min",
     steps: [
-      "You go first. Tell the funniest small disaster story from your life. Keep it under a minute: what happened, what went wrong, how you survived.",
-      "Your kid tells theirs. If they stall, prompt them: what is the worst thing that ever happened to you at school, in one minute?",
-      "The table votes. The best told disaster, not the worst disaster, wins the Worst Day Award."
+      "You go first as the anchor. Ask everyone one question: What happened in your day? Then recap the whole table's news in 20 seconds, like a TV anchor.",
+      "Your kid takes the anchor job. They ask the questions, the family answers, and then they recap it all back in their own words.",
+      "Score it together: what did the anchor get right? One remembered detail is a win."
     ],
-    win: "Your kid's story has a beginning, a middle, and an ending. If they got lost in the middle, that is normal. The win is they got to the end."
+    win: "Your kid's recap holds one real detail from someone else's day. A kid who can report back what they heard is a kid people trust."
   },
   {
-    title: "Thank the Invisible",
+    title: "The Secret Life of Objects",
     cues: [
-      "You go first: thank someone not at the table, out loud.",
-      "Your kid thanks someone. Offer choices if they stall.",
-      "Every thanks names one specific thing they did.",
+      "You go first: pick an object, invent its secret life.",
+      "Your kid picks theirs. Thirty seconds of story.",
+      "Bonus: connect your two stories together.",
     ],
-    tagline: "Say thank you out loud to someone who is not at the table.",
-    time: "3 min",
+    tagline: "That spoon has a past. Tonight your kid tells it.",
+    time: "5 min",
     steps: [
-      "You go first. Thank someone out loud who helped you but is not at this table. Say it like they can hear you: Thank you, bus driver Sam, for waiting when I was running late.",
-      "Your kid does the same. If they stall, offer choices: a teacher, a coach, a friend's parent, the lunch lady.",
-      "Everyone's thank you must name one specific thing that person did. No vague thank you for everything."
+      "You go first. Pick any object on the table and invent its secret life. Example: This spoon once crossed the ocean inside a pirate's boot.",
+      "Your kid picks their own object and tells its story for 30 seconds. Silly is good. Details are better.",
+      "Bonus round: connect the two stories. How did the spoon and their object meet? The wilder the link, the better."
     ],
-    win: "Your kid names a real person and one specific thing they did. Specific gratitude said out loud is a speaking skill and a life skill."
+    win: "Your kid's story has one detail that surprises the table. Details are what make a story feel real, and tonight they practiced inventing them."
   },
   {
-    title: "The Last-Minute Toast",
+    title: "Three Good Things",
     cues: [
-      "You go first: stand up, 30-second toast, made up now.",
-      "Your kid gets 10 seconds, then stands and toasts.",
-      "Everyone raises a glass after each toast. Ceremony.",
+      "You go first: three small good things, slowly.",
+      "Your kid names theirs. Small counts: warm socks.",
+      "Last round: one good thing about each other.",
     ],
-    tagline: "Ten seconds to think, then stand up and toast the family.",
+    tagline: "Three tiny good things about today, said out loud and slow.",
     time: "3 min",
     steps: [
-      "You go first. Stand up and give a 30 second toast to the family, made up on the spot. Example: To this family, for surviving Monday and for the best spaghetti in town.",
-      "Your kid gets 10 seconds to think, then stands and gives their own toast. Short is fine. Cheesy is encouraged.",
-      "After each toast, everyone raises their glass and takes a sip. This is a ceremony now."
+      "You go first. Name three small good things about today, said slow and out loud. Small counts: warm socks, the dog's head on my knee, this soup.",
+      "Your kid names their three. If they stall, start tiny: the bread was warm. That counts.",
+      "Last round: each person names one good thing about the person next to them."
     ],
-    win: "Your kid raises their glass and toasts without stalling past the 10 seconds. Thinking on their feet is a muscle, and tonight they flexed it."
+    win: "Your kid names all three without rushing through them. Saying good things slowly, out loud, is gratitude you can hear."
+  },
+  {
+    title: "The Yes Machine",
+    cues: [
+      "You go first: answer a weird question in 3 seconds.",
+      "Your kid answers the next ones. Fast, no thinking.",
+      "Level up: answer as a pirate, then as a robot.",
+    ],
+    tagline: "No thinking allowed. The table throws weird, and your kid answers fast.",
+    time: "3 min",
+    steps: [
+      "You go first. Someone asks you a weird question and you answer in 3 seconds, no thinking. Example: What if the table turned into a swimming pool? Then I would race my soup.",
+      "Your kid's turn. The table fires three weird questions and your kid answers fast, no prep. Speed beats sense tonight.",
+      "Level up round: answer the next one as a pirate, then as a robot. Silly voices required."
+    ],
+    win: "Your kid answers all three without freezing. Fast answers build the trust that their brain will show up when it matters."
   }
 ];
