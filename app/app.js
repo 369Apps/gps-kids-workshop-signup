@@ -217,7 +217,6 @@
       pingUndo(currentGameTitle);
     }
     saveDone(done);
-    refresh();
     if (lbData) renderWall(lbData); // instant wall update on win/undo
     if (markingDone) {
       celebrate();
@@ -966,7 +965,27 @@
     });
   });
 
+  // Workshop banner: shows the Oct 3 workshop on the Today tab with a live
+  // spots-left count. Hides itself once the event is past or sold out.
+  function renderWorkshopBanner() {
+    var card = document.getElementById("wk-card");
+    if (!card) return;
+    var deadline = new Date(2026, 9, 3, 12, 0, 0); // Oct 3, noon local
+    if (new Date() > deadline) return;
+    fetch("../workshop-oct-3-2026/spots.json", { cache: "no-store" }).then(function (r) {
+      return r.ok ? r.json() : null;
+    }).then(function (data) {
+      if (!data || data.sold_out) return;
+      var left = parseInt(data.spots_left, 10);
+      if (!(left > 0)) return;
+      var el = document.getElementById("wk-spots");
+      if (el) el.textContent = "Only " + left + " of " + data.capacity + " spots left.";
+      card.hidden = false;
+    }).catch(function () {});
+  }
+
   refresh();
   maybeShowLead();
   fetchBoard(); // loads the wall of wins on the Today tab too
+  renderWorkshopBanner(); // Saturday workshop card, hides itself past the event
 })();
