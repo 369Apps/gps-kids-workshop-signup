@@ -409,3 +409,16 @@ h2 { font-size: 16px; margin: 20px 0 8px; color: var(--yellow); }
   font-size: 17px; font-weight: 800; font-family: inherit;
 }
 .pitch-wa:active { transform: scale(0.98); }
+
+.wk-card {
+  margin: 16px 20px 0; padding: 18px 20px;
+  background: var(--navy2); border-radius: 18px;
+  border: 2px solid var(--yellow);
+}
+.wk-title { margin: 6px 0 8px; font-size: 20px; line-height: 1.25; color: #fff; }
+.wk-line { margin: 0 0 14px; font-size: 14px; line-height: 1.5; color: var(--muted); }
+.wk-btn {
+  display: block; text-align: center; padding: 12px; border-radius: 12px;
+  background: var(--yellow); color: var(--navy); font-weight: 800; font-size: 16px;
+  text-decoration: none;
+}
