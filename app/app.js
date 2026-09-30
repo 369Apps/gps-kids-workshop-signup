@@ -699,7 +699,7 @@
     var m = /[?&]ref=([A-Za-z0-9-]+)/.exec(location.search);
     if (m) {
       var inbound = decodeURIComponent(m[1]).toUpperCase();
-      if (/^GK-[A-Z0-9]{5,8}$/.test(inbound) && inbound !== getRefCode() && !getReferredBy()) {
+      if (/^GK-[A-Z0-9]{4,8}$/.test(inbound) && inbound !== getRefCode() && !getReferredBy()) {
         try { localStorage.setItem(REFBY_KEY, inbound); } catch (e) {}
       }
       try { history.replaceState(null, "", location.pathname + location.hash); } catch (e) {}
@@ -988,4 +988,40 @@
   maybeShowLead();
   fetchBoard(); // loads the wall of wins on the Today tab too
   renderWorkshopBanner(); // Saturday workshop card, hides itself past the event
+  wireWorkshopInvite(); // one-tap invite-a-friend forward on the banner
+
+  // "Invite a friend" on the workshop banner: share the invite card image +
+  // the invite words through the native share sheet. Fallback downloads the
+  // card and copies the words so the family can paste by hand in WhatsApp.
+  function wireWorkshopInvite() {
+    var btn = document.getElementById("wk-invite");
+    if (!btn) return;
+    var INVITE_URL = "https://register.joingpskids.com/workshop-oct-3-2026/";
+    var INVITE_TEXT = "Kids invent an ice cream sundae, learn how a business works, and pitch it on the mic. " +
+      "Sat Oct 3, 11 AM, Where's The Scoop? in Holly Springs. Ages 6-12. Sign up here: " + INVITE_URL;
+    btn.addEventListener("click", function () {
+      fetch("../workshop-oct-3-2026/invite-card.png")
+        .then(function (r) { if (!r.ok) throw new Error("no-card"); return r.blob(); })
+        .then(function (blob) {
+          var file = new File([blob], "gps-kids-workshop-invite.png", { type: "image/png" });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            return navigator.share({ files: [file], title: "GPS Kids Workshop", text: INVITE_TEXT });
+          }
+          throw new Error("no-file-share");
+        })
+        .then(function () { toast("Invite sent. One friend closer to a full house."); })
+        .catch(function () {
+          var a = document.createElement("a");
+          a.href = "../workshop-oct-3-2026/invite-card.png";
+          a.download = "gps-kids-workshop-invite.png";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          var done = function () { toast("Card saved and words copied. Attach the card in WhatsApp and paste."); };
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(INVITE_TEXT).then(done, done);
+          } else { done(); }
+        });
+    });
+  }
 })();
