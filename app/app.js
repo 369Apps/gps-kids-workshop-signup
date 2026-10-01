@@ -486,6 +486,28 @@
     return leaders.some(function (e) { return (e.nick || "").toLowerCase() === want; });
   }
 
+  // Posts a nickname to the board sheet. Resolves "ok" | "taken" | "error".
+  function submitNickname(nick) {
+    var ready = lbData ? Promise.resolve(lbData) : fetchBoard();
+    return ready.then(function (data) {
+      if (nickTaken(nick, data)) return "taken";
+      var fields = {};
+      fields[PING_ENTRY.game] = NICK_PREFIX + nick;
+      fields[PING_ENTRY.refcode] = getRefCode();
+      return postFormTimeout(PING_URL, fields, 12000).then(
+        function () { return "ok"; },
+        function () { return "error"; });
+    });
+  }
+
+  // Shared "now on the board" state after a successful nickname post.
+  function finishJoin(nick) {
+    setNick(nick);
+    refreshBoardUI();
+    var bn = document.getElementById("board-nudge");
+    if (bn) bn.hidden = true;
+  }
+
   function joinBoard() {
     var input = document.getElementById("lb-nick");
     var msg = document.getElementById("lb-join-msg");
@@ -496,29 +518,20 @@
     btn.disabled = true;
     btn.textContent = "Joining...";
     msg.textContent = "";
-    var ready = lbData ? Promise.resolve(lbData) : fetchBoard();
-    ready.then(function (data) {
-      if (nickTaken(nick, data)) {
+    submitNickname(nick).then(function (res) {
+      if (res === "ok") {
+        finishJoin(nick);
+        msg.textContent = "You're in. Your family shows up on the board within the hour.";
+        btn.textContent = "Joined";
+      } else if (res === "taken") {
         btn.disabled = false;
         btn.textContent = "Join";
         msg.textContent = "That nickname is taken. Pick another.";
-        return;
-      }
-      var fields = {};
-      fields[PING_ENTRY.game] = NICK_PREFIX + nick;
-      fields[PING_ENTRY.refcode] = getRefCode();
-      return postFormTimeout(PING_URL, fields, 12000).then(function () {
-        setNick(nick);
-        refreshBoardUI();
-        var bn = document.getElementById("board-nudge");
-        if (bn) bn.hidden = true;
-        msg.textContent = "You're in. Your family shows up on the board within the hour.";
-        btn.textContent = "Joined";
-      }).catch(function () {
+      } else {
         btn.disabled = false;
         btn.textContent = "Join";
         msg.textContent = "Couldn't reach the server. Check your connection and try again.";
-      });
+      }
     });
   }
 
@@ -841,7 +854,20 @@
     wincardImg.src = canvas.toDataURL("image/png");
     wincardImg.hidden = false;
     wincardActions.hidden = false;
-    wincardJoin.hidden = !!getNick();
+    // The name on the card is already typed, so "Make it" completes the
+    // board join in the same tap. The join prompt only reappears if the
+    // auto-join fails (name taken, reserved, or server unreachable).
+    if (!getNick()) {
+      wincardJoin.hidden = true;
+      if (/^test/i.test(name)) {
+        wincardJoin.hidden = false;
+        toast("That name is reserved on the board. Try another.");
+      } else {
+        tryWincardAutoJoin(name);
+      }
+    } else {
+      wincardJoin.hidden = true;
+    }
     try { wincardImg.scrollIntoView({ behavior: "smooth", block: "center" }); } catch (e) {}
   }
 
@@ -878,7 +904,29 @@
     } catch (e) { textFallback(); }
   });
 
-  // The name on the card becomes the board nickname in one tap.
+  // "Make it" also puts the family on the board: the name is already typed,
+  // so the trophy moment completes the join in one tap. Guards against
+  // double-taps firing two posts, and resets when a corrected name retries.
+  var wcAutoFired = null;
+  function tryWincardAutoJoin(name) {
+    if (getNick() || wcAutoFired === name) return;
+    wcAutoFired = name;
+    submitNickname(name).then(function (res) {
+      if (res === "ok") {
+        finishJoin(name);
+        wincardJoin.hidden = true;
+        toast("You're in. Your name shows on the board within the hour.");
+      } else {
+        wcAutoFired = null;
+        wincardJoin.hidden = false;
+        if (res === "taken") toast("That name is taken on the board. Tweak it and tap Make it again.");
+        else toast("Couldn't reach the server. Your card is fine, tap Put us on the board to retry.");
+      }
+    });
+  }
+
+  // The name on the card becomes the board nickname in one tap (manual
+  // retry path, shown when the auto-join needs a corrected name).
   document.getElementById("wincard-join-btn").addEventListener("click", function () {
     var name = cleanWincardName();
     if (name.length < 2) { toast("Add a name for the card first."); return; }
@@ -886,18 +934,19 @@
     var btn = this;
     btn.disabled = true;
     btn.textContent = "Joining...";
-    var ready = lbData ? Promise.resolve(lbData) : fetchBoard();
-    ready.then(function (data) {
-      if (nickTaken(name, data)) {
-        btn.disabled = false;
-        btn.textContent = "Put us on the board";
+    wcAutoFired = null;
+    submitNickname(name).then(function (res) {
+      btn.disabled = false;
+      btn.textContent = "Put us on the board";
+      if (res === "ok") {
+        finishJoin(name);
+        wincardJoin.hidden = true;
+        toast("You're in. Your name shows on the board within the hour.");
+      } else if (res === "taken") {
         toast("That name is taken. Try another.");
-        return;
+      } else {
+        toast("Couldn't reach the server. Check your connection and try again.");
       }
-      document.getElementById("lb-nick").value = name;
-      joinBoard();
-      wincardJoin.hidden = true;
-      toast("You're in. Your name shows on the board within the hour.");
     });
   });
 
