@@ -91,6 +91,19 @@
     font-weight: 800; font-size: 16px; padding: 14px 22px; cursor: pointer;
   }
   .invite-hint { font-size: 14px; color: #2E7D5B; margin-top: 12px; min-height: 20px; }
+  .hour {
+    background: #fff; border: 2px solid #4A2C1A; border-radius: 20px;
+    padding: 22px 20px; box-shadow: 5px 5px 0 #4A2C1A; margin-bottom: 20px;
+  }
+  .hour h2 { font-size: 22px; margin-bottom: 4px; }
+  .hour-sub { font-size: 15px; color: #7A5B45; margin-bottom: 12px; }
+  .hour-step { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; font-size: 15px; }
+  .hour-step + .hour-step { border-top: 1px solid #F5EBD9; }
+  .hour-num {
+    flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%;
+    background: #FFD66B; border: 2px solid #4A2C1A; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; font-size: 15px;
+  }
 </style>
 </head>
 <body>
@@ -104,6 +117,14 @@
     <div><strong>Where</strong><span>Where&rsquo;s The Scoop?<br>402 Argonne Terrace, Holly Springs, GA 30115</span></div>
     <div><strong>Who</strong><span>Ages 6&ndash;12</span></div>
     <div><strong>Cost</strong><span>$20 per child &middot; GPS Kids members attend free</span></div>
+  </div>
+
+  <div class="hour">
+    <h2>The hour</h2>
+    <p class="hour-sub">Sixty minutes. Your kid runs a tiny ice cream business.</p>
+    <div class="hour-step"><span class="hour-num">1</span><div><strong>Roll it.</strong> Make your own rolled ice cream at the bar. Pick the flavors, pick the toppings.</div></div>
+    <div class="hour-step"><span class="hour-num">2</span><div><strong>Price it.</strong> Kid math: what the ingredients cost, what to charge, the profit in every roll.</div></div>
+    <div class="hour-step"><span class="hour-num">3</span><div><strong>Pitch it.</strong> Name your shop, grab the mic, 30 seconds. The crowd votes. One kid leaves CEO of the Day.</div></div>
   </div>
 
   <span class="spots" id="spotsBadge">12 spots only</span>
@@ -174,7 +195,7 @@
   // Invite a friend: share the invite card image + link.
   (function () {
     var INVITE_URL = 'https://register.joingpskids.com/workshop-oct-3-2026/';
-    var INVITE_TEXT = 'Kids invent an ice cream sundae, learn how a business works, and pitch it on the mic. ' +
+    var INVITE_TEXT = 'Kids make their own rolled ice cream, learn how a business works, and pitch it on the mic. ' +
       'Sat Oct 3, 11 AM, Where\'s The Scoop? in Holly Springs. Ages 6-12. Sign up here: ' + INVITE_URL;
     var hint = document.getElementById('inviteHint');
 
