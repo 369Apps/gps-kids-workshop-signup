@@ -1046,7 +1046,7 @@
     var btn = document.getElementById("wk-invite");
     if (!btn) return;
     var INVITE_URL = "https://register.joingpskids.com/workshop-oct-3-2026/";
-    var INVITE_TEXT = "Kids invent an ice cream sundae, learn how a business works, and pitch it on the mic. " +
+    var INVITE_TEXT = "Kids make their own rolled ice cream, learn how a business works, and pitch it on the mic. " +
       "Sat Oct 3, 11 AM, Where's The Scoop? in Holly Springs. Ages 6-12. Sign up here: " + INVITE_URL;
     btn.addEventListener("click", function () {
       fetch("../workshop-oct-3-2026/invite-card.png")
