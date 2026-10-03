@@ -104,6 +104,20 @@
     background: #FFD66B; border: 2px solid #4A2C1A; font-weight: 800;
     display: flex; align-items: center; justify-content: center; font-size: 15px;
   }
+  .daystrip {
+    border: 2px solid #4A2C1A; border-radius: 20px;
+    padding: 18px 20px; margin-bottom: 20px; box-shadow: 5px 5px 0 #4A2C1A;
+  }
+  .daystrip h2 { font-size: 22px; margin-bottom: 6px; }
+  .daystrip p { font-size: 15px; }
+  .daystrip.today { background: #FFF3C4; }
+  .daystrip.live { background: #FFE3EC; }
+  .daystrip.wrap { background: #E6F7ED; }
+  .club-btn {
+    display: inline-block; margin-top: 12px; background: #2E7D5B; color: #fff;
+    font-weight: 800; font-size: 16px; padding: 14px 26px; border-radius: 14px;
+    text-decoration: none; border: 2px solid #4A2C1A;
+  }
 </style>
 </head>
 <body>
@@ -111,6 +125,11 @@
   <span class="badge">GPS Kids &middot; Hosted by Rupu Vemulapalli</span>
   <h1>Kids Ice Cream <span class="pink">Business</span> Workshop</h1>
   <p class="sub">Make something sweet. Learn how a business works. Practice a confident pitch.</p>
+
+  <div class="daystrip today" id="dayStrip" style="display:none">
+    <h2 id="dayStripTitle"></h2>
+    <p id="dayStripBody"></p>
+  </div>
 
   <div class="details">
     <div><strong>When</strong><span>Saturday, October 3, 2026<br>11:00 AM &ndash; 12:00 PM</span></div>
@@ -129,7 +148,7 @@
 
   <span class="spots" id="spotsBadge">12 spots only</span>
 
-  <div class="card invite-card">
+  <div class="card invite-card" id="inviteCard">
     <h2>Know a kid who would love this?</h2>
     <p class="invite-copy">Forward this invite to one parent friend. One tap, done.</p>
     <img class="invite-img" src="invite-card.png" alt="GPS Kids Ice Cream Business Workshop invite card">
@@ -243,6 +262,64 @@
           copyText(INVITE_TEXT, 'Card saved and words copied. Attach the card in WhatsApp and paste.');
         });
     });
+  })();
+
+  // Workshop day states: the page flips itself on event day, no human needed.
+  // 11:00 AM - 12:00 PM ET on 2026-10-03 = 15:00 - 16:00 UTC, compared in UTC
+  // so every visitor's phone agrees on the state.
+  (function () {
+    var START = Date.UTC(2026, 9, 3, 15, 0, 0);
+    var END = Date.UTC(2026, 9, 3, 16, 0, 0);
+    var now = Date.now();
+    var strip = document.getElementById('dayStrip');
+    var title = document.getElementById('dayStripTitle');
+    var body = document.getElementById('dayStripBody');
+    var SCOOP = 'Where\u2019s The Scoop?';
+
+    function withSpots(fn) {
+      fetch('spots.json', { cache: 'no-store' })
+        .then(function (r) { return r.json(); })
+        .then(function (s) { fn(s); })
+        .catch(function () { fn(null); });
+    }
+
+    function showToday(spots) {
+      strip.className = 'daystrip today';
+      title.textContent = 'Today is the day.';
+      body.textContent = 'Doors open at 11 AM at ' + SCOOP + ', Holly Springs. ' +
+        (spots ? 'Only ' + spots.spots_left + ' of ' + spots.capacity + ' spots left. ' : '') +
+        'Grab one before the bar fills.';
+      strip.style.display = 'block';
+    }
+
+    function showLive() {
+      strip.className = 'daystrip live';
+      title.textContent = 'Happening now.';
+      body.textContent = 'The bar is rolling at ' + SCOOP + '. Walk-ins welcome while seats last. Sign up below and come on over.';
+      strip.style.display = 'block';
+    }
+
+    function showWrap() {
+      strip.className = 'daystrip wrap';
+      title.textContent = "That's a wrap.";
+      body.textContent = 'Today\u2019s workshop just wrapped. Missed it? The club runs every week and members hear first.';
+      var a = document.createElement('a');
+      a.className = 'club-btn';
+      a.href = 'https://signup.joingpskids.com';
+      a.textContent = 'Join the club list';
+      body.appendChild(document.createElement('br'));
+      body.appendChild(a);
+      strip.style.display = 'block';
+      // Retire the signup and invite blocks: the event is over.
+      ['memberCard', 'stepMember', 'stepGuest', 'inviteCard', 'spotsBadge'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      });
+    }
+
+    if (now < START) { withSpots(showToday); }
+    else if (now < END) { withSpots(showLive); }
+    else { showWrap(); }
   })();
 </script>
 </body>
