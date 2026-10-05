@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kids Biz Bazaar: Spooky Market Sign Up | GPS Kids</title>
+<meta name="description" content="Kids Biz Bazaar Spooky Market: Saturday, October 24, 2026 in Holly Springs, GA. Kids ages 6-14 run real market stalls: price it, pitch it, sell it. 30 stalls.">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: #FFF7ED; color: #3B1F0E; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 24px 20px 48px; }
+  .badge {
+    display: inline-block; background: #FFD66B; color: #3B1F0E;
+    font-weight: 700; font-size: 13px; padding: 8px 16px; border-radius: 999px;
+    border: 2px solid #3B1F0E; margin-bottom: 20px;
+  }
+  h1 { font-size: 34px; line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 12px; }
+  h1 .pink { color: #D9480F; }
+  .sub { font-size: 17px; color: #7A5B45; margin-bottom: 24px; }
+  .details {
+    background: #fff; border: 2px solid #F0E2CC; border-radius: 16px;
+    padding: 18px 20px; margin-bottom: 24px;
+  }
+  .details div { display: flex; gap: 12px; padding: 7px 0; font-size: 15px; }
+  .details div + div { border-top: 1px solid #F5EBD9; }
+  .details strong { min-width: 58px; color: #2E7D5B; }
+  .spots {
+    display: inline-block; background: #B197FC; color: #3B1F0E; font-weight: 800;
+    font-size: 14px; padding: 6px 14px; border-radius: 10px; transform: rotate(-2deg);
+    border: 2px solid #3B1F0E; margin-bottom: 16px;
+  }
+  .card {
+    background: #fff; border: 2px solid #3B1F0E; border-radius: 20px;
+    padding: 26px 22px; box-shadow: 5px 5px 0 #3B1F0E; margin-bottom: 20px;
+  }
+  .card h2 { font-size: 22px; margin-bottom: 14px; }
+  .radio-row { display: flex; gap: 12px; }
+  .radio-card {
+    flex: 1; border: 2px solid #E5D5BC; border-radius: 12px; padding: 14px;
+    text-align: center; cursor: pointer; font-weight: 700; font-size: 16px;
+    background: #FFFDF8; transition: border-color .15s, background .15s;
+  }
+  .radio-card small { display: block; font-weight: 400; color: #7A5B45; font-size: 12px; margin-top: 2px; }
+  .step { display: none; }
+  .step h2 { font-size: 22px; margin-bottom: 6px; }
+  .step p.hint { font-size: 14px; color: #7A5B45; margin-bottom: 12px; }
+  .free-note {
+    background: #E6F7ED; border: 2px solid #2E7D5B; border-radius: 12px;
+    padding: 14px 16px; font-size: 15px; margin-bottom: 16px;
+  }
+  .pay-box {
+    background: #F0EFFF; border: 2px dashed #635BFF; border-radius: 12px;
+    padding: 18px; margin-top: 18px; text-align: center;
+  }
+  .pay-box p { font-size: 15px; margin-bottom: 12px; }
+  .pay-btn {
+    display: inline-block; background: #635BFF; color: #fff; font-weight: 800; font-size: 18px;
+    padding: 16px 34px; border-radius: 14px; text-decoration: none;
+  }
+  iframe.form-embed {
+    width: 100%; height: 1100px; border: none; border-radius: 12px; background: #fff;
+  }
+  .footer { text-align: center; margin-top: 28px; font-size: 13px; color: #A68B6E; }
+  .footer a { color: #2E7D5B; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <span class="badge">GPS Kids · Hosted by Mukharjee Vemulapalli · GPS Kids</span>
+  <h1>Kids <span class="pink">Biz Bazaar</span><br>Spooky Market</h1>
+  <p class="sub">Your kid runs a real stall. Real customers. Real money. Real confidence.</p>
+
+  <div class="details">
+    <div><strong>When</strong><span>Saturday, October 24, 2026<br>11:00 AM – 2:00 PM</span></div>
+    <div><strong>Where</strong><span>Where's The Scoop? (parking lot market)<br>402 Argonne Terrace, Holly Springs, GA 30115</span></div>
+    <div><strong>Who</strong><span>Ages 6–14</span></div>
+    <div><strong>Cost</strong><span>$35 per stall · GPS Kids members $25</span></div>
+  </div>
+
+  <span class="spots">30 stalls only</span>
+
+  <div class="card" id="memberCard" style="">
+    <h2>Is your child a GPS Kids member?</h2>
+    <div class="radio-row">
+      <div class="radio-card" onclick="pick(true)">Yes<small>$25 member price</small></div>
+      <div class="radio-card" onclick="pick(false)">No<small>$35 per stall</small></div>
+    </div>
+  </div>
+
+  <div class="card step" id="stepMember" style="">
+    <div class="pay-box">
+      <p><strong>Step 2:</strong> Hold your stall. Spots are held in signup order, so submit the form and your spot is held. Payment opens soon. We will text you the pay link the moment it does.</p>
+    </div>
+    <h2>Step 1: Your details</h2>
+    <iframe class="form-embed" src="https://docs.google.com/forms/d/e/1FAIpQLSfPh7_6J_q75hf9mrIVEf2QP2eKHnCIFCKCfv6Ct64XpTRn0w/viewform?embedded=true" title="Event signup form" loading="lazy">Loading&hellip;</iframe>
+  </div>
+
+  <div class="card step" id="stepGuest" style="">
+    <h2>Step 1: Your details</h2>
+    <p class="hint">Fill in the form below, then complete Step 2 to lock in the spot.</p>
+    <iframe class="form-embed" src="https://docs.google.com/forms/d/e/1FAIpQLSfPh7_6J_q75hf9mrIVEf2QP2eKHnCIFCKCfv6Ct64XpTRn0w/viewform?embedded=true" title="Event signup form" loading="lazy">Loading&hellip;</iframe>
+    <div class="pay-box">
+      <p><strong>Step 2:</strong> Hold your stall. Spots are held in signup order, so submit the form and your spot is held. Payment opens soon. We will text you the pay link the moment it does.</p>
+    </div>
+  </div>
+
+  <div class="footer">
+    GPS Kids &middot; Alpharetta, GA<br>
+    Questions? Visit <a href="https://joingpskids.com">joingpskids.com</a>
+  </div>
+</div>
+
+<script>
+  function pick(isMember) {
+    document.getElementById('memberCard').style.display = 'none';
+    document.getElementById(isMember ? 'stepMember' : 'stepGuest').style.display = 'block';
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
