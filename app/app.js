@@ -1014,21 +1014,21 @@
     });
   });
 
-  // Workshop banner: shows the Oct 3 workshop on the Today tab with a live
-  // spots-left count. Hides itself once the event is past or sold out.
+  // Bazaar banner: shows the Oct 24 Kids Biz Bazaar on the Today tab with a
+  // live stalls-left count. Hides itself once the event is past or sold out.
   function renderWorkshopBanner() {
     var card = document.getElementById("wk-card");
     if (!card) return;
-    var deadline = new Date(2026, 9, 3, 12, 0, 0); // Oct 3, noon local
+    var deadline = new Date(2026, 9, 24, 14, 0, 0); // Oct 24, 2 PM local
     if (new Date() > deadline) return;
-    fetch("../workshop-oct-3-2026/spots.json", { cache: "no-store" }).then(function (r) {
+    fetch("../kids-biz-bazaar-2026/spots.json", { cache: "no-store" }).then(function (r) {
       return r.ok ? r.json() : null;
     }).then(function (data) {
       if (!data || data.sold_out) return;
       var left = parseInt(data.spots_left, 10);
       if (!(left > 0)) return;
       var el = document.getElementById("wk-spots");
-      if (el) el.textContent = "Only " + left + " of " + data.capacity + " spots left.";
+      if (el) el.textContent = "Only " + left + " of " + data.capacity + " stalls left.";
       card.hidden = false;
     }).catch(function () {});
   }
@@ -1036,33 +1036,33 @@
   refresh();
   maybeShowLead();
   fetchBoard(); // loads the wall of wins on the Today tab too
-  renderWorkshopBanner(); // Saturday workshop card, hides itself past the event
+  renderWorkshopBanner(); // bazaar card, hides itself past the event
   wireWorkshopInvite(); // one-tap invite-a-friend forward on the banner
 
-  // "Invite a friend" on the workshop banner: share the invite card image +
+  // "Invite a friend" on the bazaar banner: share the invite card image +
   // the invite words through the native share sheet. Fallback downloads the
   // card and copies the words so the family can paste by hand in WhatsApp.
   function wireWorkshopInvite() {
     var btn = document.getElementById("wk-invite");
     if (!btn) return;
-    var INVITE_URL = "https://register.joingpskids.com/workshop-oct-3-2026/";
-    var INVITE_TEXT = "Kids make their own rolled ice cream, learn how a business works, and pitch it on the mic. " +
-      "Sat Oct 3, 11 AM, Where's The Scoop? in Holly Springs. Ages 6-12. Sign up here: " + INVITE_URL;
+    var INVITE_URL = "https://register.joingpskids.com/kids-biz-bazaar-2026/";
+    var INVITE_TEXT = "Kids run a real stall at the Spooky Market. " +
+      "Sat Oct 24, 11 AM - 2 PM, Where's The Scoop? in Holly Springs. Ages 6-14. Stalls held in signup order. Sign up here: " + INVITE_URL;
     btn.addEventListener("click", function () {
-      fetch("../workshop-oct-3-2026/invite-card.png")
+      fetch("../kids-biz-bazaar-2026/invite-card.png")
         .then(function (r) { if (!r.ok) throw new Error("no-card"); return r.blob(); })
         .then(function (blob) {
-          var file = new File([blob], "gps-kids-workshop-invite.png", { type: "image/png" });
+          var file = new File([blob], "gps-kids-bazaar-invite.png", { type: "image/png" });
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            return navigator.share({ files: [file], title: "GPS Kids Workshop", text: INVITE_TEXT });
+            return navigator.share({ files: [file], title: "GPS Kids Bazaar", text: INVITE_TEXT });
           }
           throw new Error("no-file-share");
         })
-        .then(function () { toast("Invite sent. One friend closer to a full house."); })
+        .then(function () { toast("Invite sent. One friend closer to a full market."); })
         .catch(function () {
           var a = document.createElement("a");
-          a.href = "../workshop-oct-3-2026/invite-card.png";
-          a.download = "gps-kids-workshop-invite.png";
+          a.href = "../kids-biz-bazaar-2026/invite-card.png";
+          a.download = "gps-kids-bazaar-invite.png";
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
