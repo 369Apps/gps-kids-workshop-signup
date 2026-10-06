@@ -1,5 +1,5 @@
-/* GPS Kids Daily - offline cache, v25 (network-first: first load is always fresh) */
-var CACHE = "gpsk-daily-20261005";
+/* GPS Kids Daily - offline cache, v26 (network-first: first load is always fresh) */
+var CACHE = "gpsk-daily-20261006";
 var FILES = [
   "./",
   "./index.html",
