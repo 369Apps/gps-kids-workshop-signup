@@ -1,117 +1,117 @@
 /* GPS Kids Daily - the 7 dinner-table games.
    Monday = game 0, Tuesday = game 1, ... Sunday = game 6.
-   Week of 2026-10-05. */
+   Week of 2026-10-12. */
 const GAMES = [
 {
-    title: "The Sports Call",
+    title: "The Drumroll Name",
     cues: [
-      "You go first: call the play like a sports announcer.",
-      "Your kid calls the next play. Louder.",
-      "Final round: everyone calls it at once.",
+      "You go first: drumroll your name.",
+      "Your kid drumrolls louder.",
+      "Everyone drumrolls at once.",
     ],
-    tagline: "Dinner is the big game. Your kid calls the play, loud and proud.",
+    tagline: "A drumroll on the table, then say your name like it matters. Because it does.",
     time: "3 min",
     steps: [
-      "You go first. Pick up the potatoes and call it like a sports announcer: And the dad passes the potatoes... he shoots... HE SCORES! Big voice, big arms, full drama.",
-      "Your kid picks the next play and calls it louder than you did. Passing the bread. Serving the salad. Full announcer voice, no whispering.",
-      "Final round: everyone at the table calls the same play at the same time. Dessert is served! Loudest call wins the table."
+      "You go first. Drum your hands on the table and say your own name out loud, like a star being announced. Loud, proud, all of it. Big voice, big smile.",
+      "Your kid drumrolls the table and announces their name even louder than you did. A title is allowed. The loudest kid in the world is a fine title.",
+      "Final round: everyone drumrolls together and shouts the family name at the same time. The table should shake a little. That is the win."
     ],
-    win: "Your kid's announcer voice is bigger than their regular voice. A kid who can fill a kitchen with their voice can fill a classroom too."
+    win: "Your kid says their name louder than their normal talking voice. Kids who can say their own name big can introduce themselves anywhere."
   },
 {
-    title: "One Slow Sentence",
+    title: "The Quiet Truth",
     cues: [
-      "You go first: one sentence, slow, eyes on them.",
-      "Your kid says one back. Eyes the whole time.",
-      "Go slow. Slow is brave.",
+      "You go first: eyes on them, one true thing.",
+      "Your kid says one true thing back.",
+      "Go around the table.",
     ],
-    tagline: "One slow sentence, eyes up. The bravest three minutes of the week.",
+    tagline: "Look them in the eyes and tell them one true thing you noticed today.",
     time: "3 min",
     steps: [
-      "You go first. Look your kid right in the eyes and say one full sentence about your day, very slowly. Like: Today... I fixed something hard... and I was proud. Slow on purpose.",
-      "Your kid says one sentence back to you, just as slow, eyes on you the whole time. If their eyes drop, wait. Say nothing. Let them find you again.",
-      "Go around the table. Each person speaks one slow sentence to the person next to them, eyes up. Slow wins tonight."
+      "You go first. Look your kid right in the eyes and tell them one true thing you noticed about them today. Something kind and real. Like: you helped your sister without being asked.",
+      "Your kid looks you in the eyes and tells you one true thing they noticed about you today. Eyes the whole time. If their eyes drop, wait quietly until they find you again.",
+      "Go around the table. Everyone trades one quiet truth with the person next to them. Eyes up, voice soft. Soft and steady wins tonight."
     ],
-    win: "Your kid finishes one sentence without rushing or looking away. Slow eye contact is the hardest kind, and they just did it at dinner."
+    win: "Your kid holds your eyes while saying something kind and true. Saying real things while looking at someone is a grown up skill. They just practiced it at dinner."
   },
 {
-    title: "My Family Rule",
+    title: "Pick a Side",
     cues: [
-      "You go first: announce a silly new family rule.",
-      "Your kid announces theirs and defends it.",
-      "The table votes. The rule sticks tonight.",
+      "You go first: pick a side, plant your flag.",
+      "Your kid must take the other side.",
+      "No fence sitting. Defend it.",
     ],
-    tagline: "Tonight your kid makes the rules. And defends them like a lawmaker.",
+    tagline: "Pancakes or waffles. Someone has to pick a side. Tonight it is your kid.",
     time: "5 min",
     steps: [
-      "You go first. Announce one silly new family rule and defend it for 30 seconds. Like: From now on, dessert comes before dinner on Wednesdays, because happy people digest better.",
-      "Your kid announces their own family rule and defends it for 30 seconds. It can be real: no phones at dinner, homework before TV. Reasons required, no whining.",
-      "The table votes. The winning rule sticks for tonight only. The real win is not the rule. It is that they stood behind their words."
+      "You go first. Pick a silly side and plant your flag for 30 seconds. Like: pancakes beat waffles because they hold more syrup and syrup is the whole point.",
+      "Your kid must take the other side and argue it for 30 seconds. No fence sitting, no I do not care. One real reason minimum, louder than a whisper.",
+      "New round, new topic: pizza or tacos, summer or winter, reading or drawing. Three rounds total. The table cheers for the best reason, not the loudest voice."
     ],
-    win: "Your kid gives one real reason for their rule and does not back down when the table pushes back. Standing firm at the table is practice for standing firm everywhere."
+    win: "Your kid defends the other side with at least one real reason and does not fold. Kids who can argue for waffles at dinner can stand up for themselves anywhere."
   },
 {
-    title: "The Sandwich Order",
+    title: "The Detail Detective",
     cues: [
-      "You go first: order a dream sandwich with 3 parts.",
-      "Your kid repeats the order back, word for word.",
-      "Switch: they order, you repeat.",
+      "You go first: a 20 second true story.",
+      "Your kid catches all three details.",
+      "Switch. They tell, you catch.",
     ],
-    tagline: "Listen once. Repeat it back. Your kid practices the part of speaking nobody sees.",
+    tagline: "Tell a 20 second story from your day. Your kid catches every detail like a detective.",
     time: "3 min",
     steps: [
-      "You go first. Order a dream sandwich with three parts, like: I want chicken, extra cheese, and pickles. Your kid listens, then repeats the order back, word for word.",
-      "Your kid orders their own dream sandwich with three parts. You listen, then repeat it back to them, word for word. No writing it down. Your ears are the notepad.",
-      "Hard round: order a sandwich with five parts. The listener has to get all five. Celebrate the repeats, not just the orders."
+      "You go first. Tell a 20 second true story from your day with three little details in it. Like: I spilled coffee on my blue shirt and laughed in the parking lot.",
+      "Your kid plays detective and names all three details back to you. Shirt, coffee, parking lot. If they miss one, they get one hint from the table.",
+      "Switch. Your kid tells a 20 second true story with three details, and you catch them all. No writing anything down. Your ears are the notepad."
     ],
-    win: "Your kid repeats your order back without asking you to say it again. Listening once and getting it right is a skill most adults never practice."
+    win: "Your kid catches all three details without you repeating the story. Listening for the small stuff is how good friends are made. Tonight they practiced."
   },
 {
-    title: "The Six Word Story",
+    title: "What Happened Next",
     cues: [
-      "You go first: tell your whole day in 6 words.",
-      "Your kid writes theirs: six words only.",
-      "Read them aloud. Vote for the most mysterious.",
+      "You go first: start a tiny story.",
+      "Your kid finishes it. Any ending goes.",
+      "Chain it around the table.",
     ],
-    tagline: "Six words. Your whole day. Your kid tells it like a poet.",
-    time: "3 min",
-    steps: [
-      "You go first. Tell your whole day in exactly six words. Like: Meeting ran long. Soup fixed everything. Count on your fingers if you need to.",
-      "Your kid tells their day in six words. If they stall, start them off: think of one good thing and one hard thing, then squash it all down.",
-      "Everyone reads theirs aloud. The table votes on the most mysterious story, the one that makes everyone want to know more. Mystery is the prize."
-    ],
-    win: "Your kid lands on six words that are not just a list. The moment they pick words to make the table curious, they are learning what stories do."
-  },
-{
-    title: "The Lucky Break",
-    cues: [
-      "You go first: one bad thing, one lucky part.",
-      "Your kid finds their lucky part.",
-      "The harder the bad thing, the better the find.",
-    ],
-    tagline: "One annoying thing from today. Then find the lucky part hiding inside it.",
-    time: "3 min",
-    steps: [
-      "You go first. Name one annoying thing from your day, then find the lucky part hiding inside it. Like: I got stuck in traffic, but the lucky part is I finished a whole podcast episode.",
-      "Your kid names their annoying thing and finds their lucky part. If they stall, ask: what did that annoying thing give you that you did not expect?",
-      "Go around the table. Each person gets one turn. The harder the bad thing, the bigger the cheer for the lucky part."
-    ],
-    win: "Your kid finds a real lucky part, not a fake one. Kids who can find the good inside the bad speak about life differently. Tonight they practiced."
-  },
-{
-    title: "Ask the Expert",
-    cues: [
-      "You go first: become an expert on something silly.",
-      "The table asks. You answer without thinking.",
-      "Your kid becomes the expert. Ten seconds to prepare.",
-    ],
-    tagline: "Your kid is the world expert on something absurd. The table asks. They answer.",
+    tagline: "You start a story, your kid finishes it. Every wild ending counts.",
     time: "5 min",
     steps: [
-      "You go first. Pick something absurd and declare yourself the world expert. Like: I am the world's top expert on why socks disappear. The table fires three questions. You answer fast, no thinking. Confidence beats accuracy.",
-      "Your kid picks their expert topic and gets ten seconds to prepare. Then the table fires three questions and they answer on the spot.",
-      "Lightning round: anyone at the table can shout a new expert topic and someone answers in five seconds. Keep it moving. Speed is the whole game."
+      "You go first. Start a tiny story and stop right before the fun part. Like: the dog was barking at the mailbox and then the mailbox started barking back, and then...",
+      "Your kid finishes the story. Any ending counts. Wild is welcome. The only rule is they have to end it, not shrug and say I do not know.",
+      "Go around the table. Each person starts a story, the next person finishes it. Keep each story under a minute. Short stories, big imaginations."
     ],
-    win: "Your kid answers all three questions without freezing or saying I don't know. Answering fast with a straight face builds the trust that their brain shows up under pressure."
+    win: "Your kid finishes a story with a real ending instead of trailing off. Endings are the hardest part of telling anything. They just nailed one."
+  },
+{
+    title: "The Because Thanks",
+    cues: [
+      "You go first: thank them, and say why.",
+      "Your kid thanks someone with a because.",
+      "Thank the table, one by one.",
+    ],
+    tagline: "Thank someone at the table and say exactly why. The because is the whole game.",
+    time: "3 min",
+    steps: [
+      "You go first. Thank your kid for one real thing and say exactly why. Like: thank you for setting the table, because it meant I got to sit down two minutes earlier.",
+      "Your kid thanks someone at the table with a because. Not just thanks, but thanks plus the reason. The because is the whole game.",
+      "Go around the table. Everyone thanks one person, with a because. Keep it real. The table that thanks each other stays close."
+    ],
+    win: "Your kid gives a thank you with a real because behind it. Specific gratitude lands harder than a fast thanks. They just made someone's night."
+  },
+{
+    title: "The Two-Word Answer",
+    cues: [
+      "You go first: answer in two words.",
+      "Your kid answers fast, two words only.",
+      "Lightning round. Keep it moving.",
+    ],
+    tagline: "Silly questions, two word answers, zero thinking time. Your kid answers fast.",
+    time: "3 min",
+    steps: [
+      "You go first. Your kid asks you three silly questions and you answer each in exactly two words, fast. Like: favorite food? Cold pizza. No thinking, no fixing it.",
+      "Switch. You ask your kid three silly questions and they answer in two words, fast. If they freeze, count to three out loud and the answer has to be out.",
+      "Lightning round: anyone at the table shouts a question, anyone answers in two words. Keep it moving. Speed is the whole game."
+    ],
+    win: "Your kid answers all three questions without freezing. Fast answers teach their brain that it can show up under pressure. That trust sticks."
   }
 ];
