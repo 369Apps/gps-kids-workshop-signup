@@ -91,6 +91,8 @@
   <h1>Kids <span class="pink">Biz Bazaar</span><br>Spooky Market</h1>
   <p class="sub">Your kid runs a real stall. Real customers. Real money. Real confidence.</p>
 
+  <div class="free-note" id="stallSchoolTomorrow" style="display:none;"><strong>Stall School is tomorrow, Sat Oct 17 at 11 AM.</strong> Hold your stall today and your kid gets the prep session tomorrow. Session details go to stall holders.</div>
+
   <div class="details">
     <div><strong>When</strong><span>Saturday, October 24, 2026<br>11:00 AM – 2:00 PM</span></div>
     <div><strong>Where</strong><span>Where's The Scoop? (parking lot market)<br>402 Argonne Terrace, Holly Springs, GA 30115</span></div>
@@ -206,6 +208,12 @@
           copyText(INVITE_TEXT, 'Card saved and words copied. Attach the card in WhatsApp and paste.');
         });
     });
+  })();
+
+  // Stall School strip shows only until the session starts, Sat Oct 17, 2026 at 11 AM ET (15:00 UTC).
+  (function () {
+    var el = document.getElementById('stallSchoolTomorrow');
+    if (el && Date.now() < Date.UTC(2026, 9, 17, 15, 0, 0)) { el.style.display = 'block'; }
   })();
 </script>
 </body>
