@@ -71,7 +71,7 @@
     <h2>Kids Biz Bazaar: Spooky Market</h2>
     <p>Your kid runs a real stall. Real customers. Real money. Real confidence.</p>
     <div class="facts">Sat, Oct 24, 2026 &middot; 11 AM to 2 PM<br>Where&rsquo;s The Scoop? parking lot, Holly Springs<br>Ages 6 to 14 &middot; 30 stalls</div>
-    <p id="stallSchoolNote" style="display:none;font-size:14px;color:#2E7D5B;font-weight:700;margin-bottom:14px;">Stall School is tomorrow, Sat Oct 17 at 11 AM. Hold your stall today and your kid gets the prep session tomorrow. Session details go to stall holders.</p>
+    <p id="stallSchoolNote" style="display:none;font-size:14px;color:#2E7D5B;font-weight:700;margin-bottom:14px;"></p>
     <a class="btn" id="bazaarCta" href="https://register.joingpskids.com/kids-biz-bazaar-2026/">Hold your stall</a>
     <p class="fine">Spots are held in signup order. 30 stalls only.</p>
   </div>
@@ -95,10 +95,22 @@
   <footer>GPS Kids &middot; Alpharetta, GA<br>Questions? Visit <a href="https://joingpskids.com">joingpskids.com</a></footer>
 </div>
 <script>
-  // Stall School note shows only until the session starts, Sat Oct 17, 2026 at 11 AM ET (15:00 UTC).
+  // Date aware bazaar note. Before Stall School starts it says today.
+  // After Stall School it carries the one week to market message.
+  // It hides itself at market start, Sat Oct 24, 2026 at 11 AM ET (15:00 UTC).
   (function () {
     var el = document.getElementById('stallSchoolNote');
-    if (el && Date.now() < Date.UTC(2026, 9, 17, 15, 0, 0)) { el.style.display = 'block'; }
+    if (!el) { return; }
+    var now = Date.now();
+    var stallStart = Date.UTC(2026, 9, 17, 15, 0, 0);
+    var marketStart = Date.UTC(2026, 9, 24, 15, 0, 0);
+    if (now < stallStart) {
+      el.textContent = 'Stall School is today, Sat Oct 17 at 11 AM. Hold your stall this morning and your kid gets the prep session today. Session details go to stall holders.';
+      el.style.display = 'block';
+    } else if (now < marketStart) {
+      el.textContent = 'Market day is Sat Oct 24, one week away. Hold your stall this week so your kid has the week to pick what to sell, price it, make a sign, and practice the pitch.';
+      el.style.display = 'block';
+    }
   })();
 </script>
 </body>
