@@ -91,7 +91,7 @@
   <h1>Kids <span class="pink">Biz Bazaar</span><br>Spooky Market</h1>
   <p class="sub">Your kid runs a real stall. Real customers. Real money. Real confidence.</p>
 
-  <div class="free-note" id="stallSchoolTomorrow" style="display:none;"><strong>Stall School is tomorrow, Sat Oct 17 at 11 AM.</strong> Hold your stall today and your kid gets the prep session tomorrow. Session details go to stall holders.</div>
+  <div class="free-note" id="stallSchoolTomorrow" style="display:none;"></div>
 
   <div class="details">
     <div><strong>When</strong><span>Saturday, October 24, 2026<br>11:00 AM – 2:00 PM</span></div>
@@ -104,7 +104,7 @@
 
   <div class="card" id="stallSchoolCard">
     <h2>Never sold anything? Perfect. Stall School is included.</h2>
-    <p>Every stall comes with a 45-minute prep session on <strong>Sat, Oct 17 at 11 AM</strong>: pick what to sell, cost it, price it, make a sign, and practice the pitch. Session details go to stall holders.</p>
+    <p id="stallSchoolCardText">Every stall comes with a 45-minute prep session on <strong>Sat, Oct 17 at 11 AM</strong>: pick what to sell, cost it, price it, make a sign, and practice the pitch. Session details go to stall holders.</p>
     <p>And on market day, your kid keeps every dollar they sell. No cut.</p>
   </div>
 
@@ -210,10 +210,26 @@
     });
   })();
 
-  // Stall School strip shows only until the session starts, Sat Oct 17, 2026 at 11 AM ET (15:00 UTC).
+  // Date aware bazaar strip. Before Stall School starts it says today.
+  // After Stall School it carries the one week to market message and
+  // the Stall School card switches to home prep. The strip hides itself
+  // at market start, Sat Oct 24, 2026 at 11 AM ET (15:00 UTC).
   (function () {
     var el = document.getElementById('stallSchoolTomorrow');
-    if (el && Date.now() < Date.UTC(2026, 9, 17, 15, 0, 0)) { el.style.display = 'block'; }
+    var now = Date.now();
+    var stallStart = Date.UTC(2026, 9, 17, 15, 0, 0);
+    var marketStart = Date.UTC(2026, 9, 24, 15, 0, 0);
+    if (el && now < stallStart) {
+      el.innerHTML = '<strong>Stall School is today, Sat Oct 17 at 11 AM.</strong> Hold your stall this morning and your kid gets the prep session today. Session details go to stall holders.';
+      el.style.display = 'block';
+    } else if (el && now < marketStart) {
+      el.innerHTML = '<strong>Market day is Sat Oct 24, one week away.</strong> Hold your stall this week so your kid has the week to pick what to sell, price it, make a sign, and practice the pitch.';
+      el.style.display = 'block';
+      var cardText = document.getElementById('stallSchoolCardText');
+      if (cardText) {
+        cardText.textContent = 'Stall School ran on Sat, Oct 17. Hold your stall this week and do the same prep at home: pick what to sell, cost it, price it, make a sign, and practice the pitch.';
+      }
+    }
   })();
 </script>
 </body>
